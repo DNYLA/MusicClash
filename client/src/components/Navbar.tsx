@@ -7,7 +7,7 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
+  Link as NavLink,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -58,7 +59,7 @@ export default function WithSubnavigation() {
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}
           >
-            Logo
+            MusicClash
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -86,9 +87,9 @@ export default function WithSubnavigation() {
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
-            bg={'pink.400'}
+            bg={'blue.400'}
             _hover={{
-              bg: 'pink.300',
+              bg: 'blue.300',
             }}
           >
             Sign Up
@@ -114,9 +115,10 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
-              <Link
+              <NavLink
                 p={2}
-                href={navItem.href ?? '#'}
+                as={Link}
+                to={navItem.href}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
@@ -126,7 +128,7 @@ const DesktopNav = () => {
                 }}
               >
                 {navItem.label}
-              </Link>
+              </NavLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -154,8 +156,9 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <Link
-      href={href}
+    <NavLink
+      as={Link}
+      to={href}
       role={'group'}
       display={'block'}
       p={2}
@@ -185,7 +188,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
-    </Link>
+    </NavLink>
   );
 };
 
@@ -211,7 +214,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
       <Flex
         py={2}
         as={Link}
-        href={href ?? '#'}
+        to={href}
         justify={'space-between'}
         align={'center'}
         _hover={{
@@ -246,9 +249,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <NavLink key={child.label} py={2} as={Link} to={child.href}>
                 {child.label}
-              </Link>
+              </NavLink>
             ))}
         </Stack>
       </Collapse>
@@ -260,37 +263,39 @@ interface NavItem {
   label: string;
   subLabel?: string;
   children?: Array<NavItem>;
-  href?: string;
+  href: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
+    label: 'Explore',
+    href: '/',
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
+        label: 'Popular',
+        subLabel: 'List of top played clashes.',
+        href: '/',
       },
       {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        label: 'Random',
+        subLabel: 'Open up a random quiz.',
+        href: '/explore',
       },
     ],
   },
   {
-    label: 'Find Work',
+    label: 'Create',
+    href: '/create',
     children: [
       {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
+        label: 'Clash Battle',
+        subLabel: 'Create your own clash.',
+        href: '/create',
       },
       {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
+        label: 'LastFM Clash',
+        subLabel: 'Import data from LastFM into a clash.',
+        href: '/create/import',
       },
     ],
   },

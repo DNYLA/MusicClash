@@ -32,19 +32,17 @@ const options = [
 ];
 interface PackageTierProps {
   title: string;
-  options: Array<{ id: number; desc: string }>;
   handleChange: (i: number, a: number) => void;
   deleteCallback: (i: number) => void;
   handleSwitch: (i: number, setOne: boolean) => void;
-  typePlan: string;
+  artist: string;
   checked?: boolean;
   position: number;
   isSetOne?: boolean;
 }
 export const SongCard = ({
   title,
-  options,
-  typePlan,
+  artist,
   checked = false,
   position,
   handleChange,
@@ -91,7 +89,7 @@ export const SongCard = ({
         />
       </WrapItem>
       <Heading size={'md'} width={200} textAlign={'center'}>
-        {typePlan}
+        {artist}
       </Heading>
       <Stack direction={['column', 'row']} justify={'end'}>
         {/* <Button
@@ -222,8 +220,7 @@ const SongCardConainer = ({
             <>
               <SongCard
                 title={track.name}
-                typePlan={track.artistName}
-                options={options}
+                artist={track.artistName}
                 checked={i % 2 === 0 ? false : true}
                 position={i}
                 handleChange={updatePosition}

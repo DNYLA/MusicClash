@@ -39,29 +39,30 @@ export default function TableC() {
         bg={{ md: bg }}
         shadow="lg"
       >
+        <SimpleGrid
+          spacingY={3}
+          columns={{ base: 1, md: 4 }}
+          w={{ base: 120, md: 'full' }}
+          textTransform="uppercase"
+          bg={bg3}
+          color={'gray.500'}
+          py={{ base: 1, md: 4 }}
+          px={{ base: 2, md: 10 }}
+          fontSize="md"
+          fontWeight="hairline"
+        >
+          <span>Name</span>
+          <span>Created</span>
+          <span>Data</span>
+          {/* <chakra.span textAlign={{ md: 'right' }}>Actions</chakra.span> */}
+        </SimpleGrid>
         {data.map((token, tid) => {
           return (
             <Flex direction={{ base: 'row', md: 'column' }} bg={bg2} key={tid}>
               <SimpleGrid
                 spacingY={3}
                 columns={{ base: 1, md: 4 }}
-                w={{ base: 120, md: 'full' }}
-                textTransform="uppercase"
-                bg={bg3}
-                color={'gray.500'}
-                py={{ base: 1, md: 4 }}
-                px={{ base: 2, md: 10 }}
-                fontSize="md"
-                fontWeight="hairline"
-              >
-                <span>Name</span>
-                <span>Created</span>
-                <span>Data</span>
-                <chakra.span textAlign={{ md: 'right' }}>Actions</chakra.span>
-              </SimpleGrid>
-              <SimpleGrid
-                spacingY={3}
-                columns={{ base: 1, md: 4 }}
+                bg={tid % 2 == 0 ? bg2 : bg3}
                 w="full"
                 py={2}
                 px={10}

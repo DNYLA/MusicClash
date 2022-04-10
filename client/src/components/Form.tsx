@@ -85,7 +85,7 @@ export default function SongForm({
                 <SimpleGrid columns={6} spacing={6}>
                   <FormControl as={GridItem} colSpan={[6, 3]}>
                     <FormLabel
-                      htmlFor="first_name"
+                      htmlFor="artist_name"
                       fontSize="sm"
                       fontWeight="md"
                       color={useColorModeValue('gray.700', 'gray.50')}
@@ -94,8 +94,8 @@ export default function SongForm({
                     </FormLabel>
                     <Input
                       type="text"
-                      name="first_name"
-                      id="first_name"
+                      name="artist_name"
+                      id="artist_name"
                       autoComplete="given-name"
                       mt={1}
                       focusBorderColor="brand.400"
