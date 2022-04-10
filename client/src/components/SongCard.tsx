@@ -72,7 +72,7 @@ export const SongCard = ({
       }}
       alignItems={{ md: 'center' }}
     >
-      <Heading textAlign={'center'} size={'lg'} w={250}>
+      <Heading textAlign={'center'} size={'lg'} w={200}>
         {title}
       </Heading>
       {/* <List spacing={3} textAlign="start">
