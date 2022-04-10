@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import SongForm, { Track } from '../components/Form';
 import SongCardConainer, { SongCard } from '../components/SongCard';
 import { HStack } from '@chakra-ui/layout';
+export type TrackSet = {
+  setOne: Track[];
+  setTwo: Track[];
+};
 
 export default function FormPage() {
   const [trackSetOne, setTrackSetOne] = useState<Track[]>([]);
@@ -38,7 +42,7 @@ export default function FormPage() {
 
   return (
     <div>
-      <HStack>
+      <HStack display="flex" alignItems="stretch">
         <SongCardConainer
           trackSets={[trackSetOne, trackSetTwo]}
           tracks={trackSetOne}

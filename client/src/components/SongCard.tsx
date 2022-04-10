@@ -72,7 +72,9 @@ export const SongCard = ({
       }}
       alignItems={{ md: 'center' }}
     >
-      <Heading size={'xl'}>{title}</Heading>
+      <Heading textAlign={'center'} size={'lg'} w={250}>
+        {title}
+      </Heading>
       {/* <List spacing={3} textAlign="start">
         {options.map((desc, id) => (
           <ListItem key={desc.id}>
@@ -88,8 +90,10 @@ export const SongCard = ({
           src="https://i1.wp.com/themusicalhype.com/wp-content/uploads/2019/12/roddy-ricch-please-excuse-me-for-being-antisocial-atlantic.jpeg?ssl=1"
         />
       </WrapItem>
-      <Heading size={'md'}>{typePlan}</Heading>
-      <Stack direction={['column', 'row']}>
+      <Heading size={'md'} width={200} textAlign={'center'}>
+        {typePlan}
+      </Heading>
+      <Stack direction={['column', 'row']} justify={'end'}>
         {/* <Button
           size="md"
           color={useColorModeValue(colorTextLight, colorTextDark)}
@@ -168,11 +172,17 @@ const SongCardConainer = ({
   };
 
   return (
-    <Box py={6} px={5} minH={'50vh'}>
+    <Box
+      py={6}
+      px={5}
+      display={'flex'}
+      justifyContent={{ base: 'flex-start' }}
+      alignItems={'stretch'}
+    >
       <Stack spacing={4} width={'100%'} direction={'column'}>
         <Stack
           p={5}
-          alignItems={'center'}
+          // alignItems={'center'}
           justifyContent={{
             base: 'flex-start',
             md: 'space-around',
@@ -189,7 +199,7 @@ const SongCardConainer = ({
             }}
             textAlign={'center'}
           >
-            <Heading size={'lg'}>
+            <Heading size={'lg'} textAlign={'center'}>
               Songs From <Text color="purple.400">First Set</Text>
             </Heading>
           </Stack>
