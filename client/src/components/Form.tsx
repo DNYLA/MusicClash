@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   chakra,
   Box,
@@ -12,6 +12,8 @@ import {
   FormLabel,
   Input,
   Button,
+  Flex,
+  Checkbox,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
 
@@ -22,7 +24,7 @@ export type Track = {
 };
 
 interface SongFormProps {
-  handleSubmit: () => void;
+  handleSubmit: (firstSet: boolean) => void;
   setTrack: (track: Track) => void;
   track: Track;
 }
@@ -32,6 +34,7 @@ export default function SongForm({
   track,
   setTrack,
 }: SongFormProps) {
+  const [isFirstSet, setIsFirstSet] = useState(true);
   return (
     <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
       <Box visibility={{ base: 'hidden', sm: 'visible' }} aria-hidden="true">
@@ -159,6 +162,32 @@ export default function SongForm({
                     />
                   </FormControl>
                 </SimpleGrid>
+                <FormControl>
+                  <Flex alignItems="start">
+                    <Flex alignItems="center" h={5}>
+                      <Checkbox
+                        colorScheme="blue"
+                        isChecked={isFirstSet}
+                        onChange={(e) => setIsFirstSet(e.target.checked)}
+                        id="comments"
+                        rounded="md"
+                      />
+                    </Flex>
+                    <Box ml={3} fontSize="sm">
+                      <chakra.label
+                        htmlFor="comments"
+                        fontWeight="md"
+                        color={useColorModeValue('gray.700', 'gray.50')}
+                      >
+                        First Set
+                      </chakra.label>
+                      <Text color={useColorModeValue('gray.500', 'gray.400')}>
+                        Choose which set you would like this track to be apart
+                        of.
+                      </Text>
+                    </Box>
+                  </Flex>
+                </FormControl>
               </Stack>
               <Box
                 px={{ base: 4, sm: 6 }}
@@ -167,7 +196,7 @@ export default function SongForm({
                 textAlign="right"
               >
                 <Button
-                  onClick={handleSubmit}
+                  onClick={() => handleSubmit(isFirstSet)}
                   colorScheme="blue"
                   _focus={{ shadow: '' }}
                   fontWeight="md"

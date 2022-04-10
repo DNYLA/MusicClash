@@ -35,9 +35,11 @@ interface PackageTierProps {
   options: Array<{ id: number; desc: string }>;
   handleChange: (i: number, a: number) => void;
   deleteCallback: (i: number) => void;
+  handleSwitch: (i: number, setOne: boolean) => void;
   typePlan: string;
   checked?: boolean;
   position: number;
+  isSetOne?: boolean;
 }
 export const SongCard = ({
   title,
@@ -47,6 +49,8 @@ export const SongCard = ({
   position,
   handleChange,
   deleteCallback,
+  handleSwitch,
+  isSetOne = true,
 }: PackageTierProps) => {
   const colorTextLight = checked ? 'white' : 'purple.600';
   const bgColorLight = checked ? 'purple.400' : 'gray.300';
@@ -94,7 +98,7 @@ export const SongCard = ({
         >
           Youtube
         </Button> */}
-        <IconButton
+        {/* <IconButton
           variant="outline"
           aria-label="Search database"
           colorScheme="facebook"
@@ -106,7 +110,7 @@ export const SongCard = ({
           colorScheme="red"
           icon={<DeleteIcon />}
           onClick={() => deleteCallback(position)}
-        />
+        /> */}
         <IconButton
           variant="outline"
           aria-label="Search database"
@@ -121,7 +125,10 @@ export const SongCard = ({
           icon={<ArrowDownIcon />}
           onClick={() => handleChange(position, 1)}
         />
-        {/* <OptionButton /> */}
+        <OptionButton
+          deleteCallback={() => deleteCallback(position)}
+          handleSwitch={() => handleSwitch(position, isSetOne)}
+        />
       </Stack>
     </Stack>
   );
@@ -129,14 +136,37 @@ export const SongCard = ({
 
 interface SongCardContainerProps {
   tracks: Track[];
-  handleChange: (i: number, a: number) => void;
-  deleteCallback: (i: number) => void;
+  trackSets: Track[][];
+  setTracks: (tracks: Track[]) => void;
+  handleSwitch: (i: number, setOne: boolean) => void;
+  isSetOne?: boolean;
 }
 const SongCardConainer = ({
   tracks,
-  handleChange,
-  deleteCallback,
+  setTracks,
+  handleSwitch,
+  isSetOne = true,
 }: SongCardContainerProps) => {
+  const updatePosition = (index: number, amount: number) => {
+    const newIndex = index + amount;
+    const _tracks = [...tracks];
+
+    //check if newIndex is out of bounds
+    if (newIndex > _tracks.length - 1 || newIndex < 0) {
+      console.log('Invalid Amount');
+      return;
+    }
+
+    _tracks.splice(index, 1);
+    _tracks.splice(newIndex, 0, tracks[index]);
+    setTracks(_tracks);
+  };
+
+  const handleDelete = (index: number) => {
+    //Ask for Confirmation before deleting.
+    setTracks(tracks.filter((t, i) => i !== index));
+  };
+
   return (
     <Box py={6} px={5} minH={'50vh'}>
       <Stack spacing={4} width={'100%'} direction={'column'}>
@@ -186,8 +216,10 @@ const SongCardConainer = ({
                 options={options}
                 checked={i % 2 === 0 ? false : true}
                 position={i}
-                handleChange={handleChange}
-                deleteCallback={deleteCallback}
+                handleChange={updatePosition}
+                deleteCallback={handleDelete}
+                handleSwitch={handleSwitch}
+                isSetOne={isSetOne}
               />
               <Divider />
             </>

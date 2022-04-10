@@ -4,6 +4,8 @@ import {
   ArrowUpIcon,
   DeleteIcon,
   EditIcon,
+  ExternalLinkIcon,
+  RepeatIcon,
 } from '@chakra-ui/icons';
 import {
   Popover,
@@ -20,7 +22,16 @@ import {
 import { BsThreeDotsVertical, BsChatSquareQuote } from 'react-icons/bs';
 import { RiShutDownLine, RiRestartLine, RiFileShredLine } from 'react-icons/ri';
 
-export default function OptionButton() {
+interface OptionsButtonProps {
+  deleteCallback: () => void;
+  handleSwitch: () => void;
+  // openLink: () => void;
+}
+export default function OptionButton({
+  deleteCallback,
+  handleSwitch,
+}: // openLink,
+OptionsButtonProps) {
   return (
     /**
      * You may move the Popover outside Flex.
@@ -31,7 +42,8 @@ export default function OptionButton() {
           <IconButton
             aria-label="Song Options"
             icon={<BsThreeDotsVertical />}
-            variant="solid"
+            variant="outline"
+            colorScheme="facebook"
             w="fit-content"
           />
         </PopoverTrigger>
@@ -46,31 +58,34 @@ export default function OptionButton() {
                 justifyContent="space-between"
                 fontWeight="normal"
                 fontSize="sm"
+                colorScheme={'blue'}
               >
-                Edit Item
+                Edit
               </Button>
               <Button
                 w="194px"
                 variant="ghost"
-                rightIcon={<ArrowUpIcon />}
+                rightIcon={<RepeatIcon />}
                 justifyContent="space-between"
                 fontWeight="normal"
-                colorScheme="red"
+                colorScheme={'blue'}
                 fontSize="sm"
+                onClick={handleSwitch}
               >
-                Move Up
+                Switch Set
               </Button>
               <Button
                 w="194px"
                 variant="ghost"
-                rightIcon={<ArrowDownIcon />}
+                rightIcon={<ExternalLinkIcon />}
                 justifyContent="space-between"
                 fontWeight="normal"
-                colorScheme="red"
+                colorScheme="blue"
                 fontSize="sm"
               >
-                Move Down
+                Youtube
               </Button>
+
               <Button
                 w="194px"
                 variant="ghost"
@@ -79,8 +94,9 @@ export default function OptionButton() {
                 fontWeight="normal"
                 colorScheme="red"
                 fontSize="sm"
+                onClick={deleteCallback}
               >
-                Delete Song
+                Delete
               </Button>
             </Stack>
           </PopoverBody>

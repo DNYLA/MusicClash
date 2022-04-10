@@ -3,48 +3,56 @@ import { Badge, Box, Flex, Text } from '@chakra-ui/layout';
 import React, { useState } from 'react';
 import SongForm, { Track } from '../components/Form';
 import SongCardConainer, { SongCard } from '../components/SongCard';
+import { HStack } from '@chakra-ui/layout';
 
 export default function FormPage() {
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const [trackSetOne, setTrackSetOne] = useState<Track[]>([]);
+  const [trackSetTwo, setTrackSetTwo] = useState<Track[]>([]);
+  const [trackSets, setTracksets] = useState<Track[][]>([]);
   const [track, setTrack] = useState<Track>({
     name: '',
     artistName: '',
     url: '',
   });
 
-  const handleSubmit = () => {
-    setTracks([...tracks, track]);
+  const handleSubmit = (isFirstSet: boolean) => {
+    if (isFirstSet) setTrackSetOne([...trackSetOne, track]);
+    else setTrackSetTwo([...trackSetTwo, track]);
   };
 
-  const updatePosition = (index: number, amount: number) => {
-    const newIndex = index + amount;
-    const _tracks = [...tracks];
+  const handleSwitch = (index: number, isSetOne: boolean) => {
+    const _tracksOne = [...trackSetOne];
+    const _tracksTwo = [...trackSetTwo];
 
-    //check if newIndex is out of bounds
-    if (newIndex > tracks.length - 1 || newIndex < 0) {
-      console.log('Invalid Amount');
-      return;
+    if (isSetOne) {
+      _tracksOne.splice(index, 1);
+      _tracksTwo.push(trackSetOne[index]);
+    } else {
+      _tracksTwo.splice(index, 1);
+      _tracksOne.push(trackSetTwo[index]);
     }
 
-    _tracks.splice(index, 1);
-    _tracks.splice(newIndex, 0, tracks[index]);
-    setTracks(_tracks);
-  };
-
-  const handleDelete = (index: number) => {
-    //Ask for Confirmation before deleting.
-    setTracks(tracks.filter((t, i) => i !== index));
+    setTrackSetOne(_tracksOne);
+    setTrackSetTwo(_tracksTwo);
   };
 
   return (
     <div>
-      <div>
+      <HStack>
         <SongCardConainer
-          tracks={tracks}
-          handleChange={updatePosition}
-          deleteCallback={handleDelete}
+          trackSets={[trackSetOne, trackSetTwo]}
+          tracks={trackSetOne}
+          setTracks={setTrackSetOne}
+          handleSwitch={handleSwitch}
         />
-      </div>
+        <SongCardConainer
+          trackSets={[trackSetOne, trackSetTwo]}
+          tracks={trackSetTwo}
+          setTracks={setTrackSetTwo}
+          handleSwitch={handleSwitch}
+          isSetOne={false}
+        />
+      </HStack>
       <SongForm handleSubmit={handleSubmit} track={track} setTrack={setTrack} />
     </div>
   );
