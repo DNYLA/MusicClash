@@ -10,19 +10,21 @@ import {
   TagLabel,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
-const Cpwe = () => {
-  const property = {
-    imageUrl:
-      'https://i.discogs.com/drDRPMm8yMlW1x_tX3Mbdx04Q6ltzHBo-Zbm4zdreBw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NzUw/MjI3LTE1ODE2OTQy/NTQtNjk5NC5qcGVn.jpeg',
-    imageAlt: 'Rear view of modern home with pool',
-    songs: 2,
-    players: 12,
-    title: 'Roddy Ricch vs Travis Scott',
-    formattedPrice: '$1,900.00',
-    reviewCount: 34,
-    rating: 4,
-  };
+export type GameInfo = {
+  title: string;
+  imageUrl: string;
+  rating: number;
+  reviewCount: number;
+  songCount: number;
+  playersCount: number;
+  newGame: boolean;
+};
+interface MenuCardProps {
+  game: GameInfo;
+  handleClick: () => void;
+}
 
+export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
   return (
     <Flex
       bg={useColorModeValue('#F9FAFB', 'gray.600')}
@@ -31,6 +33,7 @@ const Cpwe = () => {
       // rounded="lg"
       alignItems="center"
       justifyContent="center"
+      onClick={handleClick}
     >
       <Box
         bg={useColorModeValue('white', 'gray.800')}
@@ -40,16 +43,19 @@ const Cpwe = () => {
         shadow="lg"
       >
         <Image
-          src={property.imageUrl}
-          alt={property.imageAlt}
+          src={game.imageUrl}
+          cursor="pointer"
+          alt={'Game Image'}
           roundedTop="lg"
         />
 
         <Box p="6">
           <Box d="flex" alignItems="baseline">
-            <Badge rounded="full" px="2" colorScheme="teal">
-              New
-            </Badge>
+            {game.newGame && (
+              <Badge rounded="full" px="2" colorScheme="teal">
+                New
+              </Badge>
+            )}
             <Box
               color="gray.500"
               fontWeight="semibold"
@@ -58,7 +64,7 @@ const Cpwe = () => {
               textTransform="uppercase"
               ml="2"
             >
-              {property.songs} songs &bull; {property.players} players
+              {game.songCount} songs &bull; {game.playersCount} players
             </Box>
           </Box>
 
@@ -69,7 +75,7 @@ const Cpwe = () => {
             lineHeight="tight"
             isTruncated
           >
-            {property.title}
+            {game.title}
           </Box>
 
           {/* <Box>
@@ -99,11 +105,11 @@ const Cpwe = () => {
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < property.rating ? 'teal.500' : 'gray.300'}
+                  color={i < game.rating ? 'teal.500' : 'gray.300'}
                 />
               ))}
             <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
+              {game.reviewCount} reviews
             </Box>
           </Box>
         </Box>
@@ -111,5 +117,3 @@ const Cpwe = () => {
     </Flex>
   );
 };
-
-export default Cpwe;

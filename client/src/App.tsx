@@ -16,6 +16,7 @@ import TableC from './components/Table';
 import FormPage from './pages/FormPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Clash from './pages/Clash';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -35,6 +36,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="create" element={<FormPage />} />
+          <Route path="/clash/:id" element={<Clash />} />
         </Routes>
       </ChakraProvider>
     </BrowserRouter>
