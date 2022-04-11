@@ -6,10 +6,16 @@ import {
   useColorModeValue,
   HStack,
   Badge,
+  Button,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
+import { Track } from './Form';
 
-export const ListCard = () => {
+interface ListCardProps {
+  track: Track;
+}
+
+export const ListCard = ({ track }: ListCardProps) => {
   return (
     <Flex
       bg={useColorModeValue('#F9FAFB', 'gray.600')}
@@ -28,13 +34,13 @@ export const ListCard = () => {
         rounded="lg"
         overflow="hidden"
         width={'100%'}
+        minH={115}
       >
         <Box
           w={1 / 3}
           bgSize="cover"
           style={{
-            backgroundImage:
-              "url('https://i1.wp.com/themusicalhype.com/wp-content/uploads/2019/12/roddy-ricch-please-excuse-me-for-being-antisocial-atlantic.jpeg?ssl=1')",
+            backgroundImage: `url('${track.url}')`,
           }}
         ></Box>
 
@@ -44,16 +50,16 @@ export const ListCard = () => {
             fontWeight="bold"
             color={useColorModeValue('gray.800', 'white')}
           >
-            Perfect Time
+            {track.name}
           </chakra.h1>
 
-          <Flex mt={3} alignItems="center" justifyContent="space-between">
+          <Flex mt={0} alignItems="center" justifyContent="space-between">
             <chakra.p
               mt={2}
               fontSize="sm"
               color={useColorModeValue('gray.600', 'gray.400')}
             >
-              by Roddy Ricch
+              by {track.artistName}
               <Badge rounded="full" px="2" colorScheme="teal" ml={3}>
                 2:15
               </Badge>

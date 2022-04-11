@@ -24,10 +24,22 @@ import {
 import { BsPerson } from 'react-icons/bs';
 import { FiServer } from 'react-icons/fi';
 import { MdMusicNote } from 'react-icons/md';
+import { Track } from '../components/Form';
 import { ListCard } from '../components/ListCard';
 import StatsCard from '../components/StatsCard';
 
 export default function Clash() {
+  const trackInfo: Track = {
+    name: 'Perfect Time',
+    artistName: 'Roddy Ricch',
+    url: 'https://i1.wp.com/themusicalhype.com/wp-content/uploads/2019/12/roddy-ricch-please-excuse-me-for-being-antisocial-atlantic.jpeg?ssl=1',
+  };
+
+  const wuTangTrack: Track = {
+    name: 'C.R.E.A.M',
+    artistName: 'Wu-Tang Clan',
+    url: 'http://4.bp.blogspot.com/_k10O9FWTRzU/TNCsG0vvKzI/AAAAAAAAAz0/bilC88p0Bw0/s1600/wu_tang_clan_enter_the_wu_tang_36_chambers-f.jpg',
+  };
   // const bgUrl = 'https://wallpapercave.com/wp/wp1818813.jpg';
   const bgUrl =
     'https://media.cultura.com/media/catalog/product/cache/1/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/e/n/enter-the-wu-tang-clan-36-chambers-0888751698512_0.jpg?t=1509590181';
@@ -54,34 +66,28 @@ export default function Clash() {
           <Text>Wu-Tang Clan</Text>
         </HStack>
       </Box>
+
       <Box mt={5}>
-        <HStack>
-          <ListCard />
-          <Text>vs</Text>
-
-          <ListCard />
-        </HStack>
-        <HStack mt={5}>
-          <ListCard />
-          <Text>vs</Text>
-
-          <ListCard />
-        </HStack>
+        <Center mt={4}>
+          <Button colorScheme="teal" size="lg" variant="outline">
+            Play
+          </Button>
+        </Center>
         <StatsList />
+
         <Grid
-          mt={5}
+          mt={21}
           // h="200px"
           // templateRows="repeat(2, 1fr)"
           templateColumns="repeat(11, 1fr)"
           gap={4}
         >
           <GridItem colSpan={5}>
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
+            {Array(5)
+              .fill('')
+              .map((_, i) => (
+                <ListCard track={trackInfo} />
+              ))}
             {/* <ListCard /> */}
           </GridItem>
 
@@ -92,13 +98,11 @@ export default function Clash() {
           </GridItem>
 
           <GridItem colSpan={5}>
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
-            <ListCard />
+            {Array(5)
+              .fill('')
+              .map((_, i) => (
+                <ListCard track={wuTangTrack} />
+              ))}
           </GridItem>
           {/* 
           <GridItem rowSpan={4} colSpan={1} justifyContent="space-around">
