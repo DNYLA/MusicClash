@@ -1,6 +1,6 @@
 import { PrismaClient } from '.prisma/client';
 import { NextFunction, Request, Response } from 'express';
-
+import bcrypt, { hashSync, compareSync } from 'bcrypt';
 const prisma = new PrismaClient();
 const DEFAULT_IMAGE =
   'https://ronaldmottram.co.nz/wp-content/uploads/2019/01/default-user-icon-8.jpg';
@@ -32,13 +32,21 @@ export const signup = async (
   }
 
   //Hash with BCrypt
+  let hashedPass;
+  try {
+    hashedPass = bcrypt.hashSync(password, 12);
+  } catch (err) {
+    return next('Unable to sign up!');
+  }
+
+  if (!hashedPass) return next('Unable to sign up!');
 
   let newUser;
   try {
     newUser = await prisma.user.create({
       data: {
         username,
-        password,
+        password: hashedPass,
         avatarUrl: DEFAULT_IMAGE,
       },
     });
@@ -75,8 +83,13 @@ export const login = async (
   if (!foundUser) return next('Invalid Credentials!');
 
   //Verify Password with BCrypt
+  let validPass = false;
+  try {
+    validPass = bcrypt.compareSync(password, foundUser.password);
+  } catch (err) {
+    return next('Unable to login!');
+  }
 
-  let validPass = foundUser.password === password ? true : false;
   if (!validPass) {
     return next('Invalid Credential!');
   }
