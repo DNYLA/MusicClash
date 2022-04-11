@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  name      String
+  email     String
+  avatarUrl String
+  Clash Clash[]
+}
+
+model Clash {
+  id             Int    @id @default(autoincrement())
+  title          String
+  primarySetId   Int    @unique()
+  secondarySetId Int
+  creatorId      Int
+  creator        User   @relation(fields: [creatorId], references: [id])
+  TrackSet TrackSet[]
+}
+
+model TrackSet {
+  id      Int     @id @default(autoincrement())
+  clashId Int
+  title   String
+  tracks  Track[]
+  Clash   Clash   @relation(fields: [clashId], references: [id])
+}
+
+model Track {
+  position   Int
+  title      String
+  artist     String
+  length     String
+  youtubeUrl String
+  setId      Int
+  trackSet   TrackSet @relation(fields: [setId], references: [id])
+
+  @@id([setId, position], name: "id")
+}

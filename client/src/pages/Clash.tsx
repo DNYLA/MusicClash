@@ -22,6 +22,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { BsPerson } from 'react-icons/bs';
+import { FaPlay } from 'react-icons/fa';
 import { FiServer } from 'react-icons/fi';
 import { MdMusicNote } from 'react-icons/md';
 import { Track } from '../components/Form';
@@ -69,7 +70,12 @@ export default function Clash() {
 
       <Box mt={5}>
         <Center mt={4}>
-          <Button colorScheme="teal" size="lg" variant="outline">
+          <Button
+            colorScheme="teal"
+            size="lg"
+            variant="outline"
+            rightIcon={<FaPlay />}
+          >
             Play
           </Button>
         </Center>
