@@ -3,14 +3,13 @@ import dotenv from 'dotenv';
 import { router as authRouter } from './routes/auth';
 import passport from 'passport';
 import session from 'express-session';
-// Initialize(passport);
 require('./config/passport-local');
-
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
+//Middleware
 app.use(
   session({
     name: 'session-id',
@@ -23,10 +22,12 @@ app.use(
 app.use(express.json()); //Parses All incoming data into JSON
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth', authRouter);
+
+//Routes
+app.use('/api/auth', authRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+  res.send('<h1>MusicClash</h1>');
 });
 
 app.listen(port, () => {

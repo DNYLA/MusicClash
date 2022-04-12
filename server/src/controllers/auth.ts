@@ -1,8 +1,6 @@
 import { PrismaClient } from '.prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { getJWTSecret } from '../utils';
 const prisma = new PrismaClient();
 const DEFAULT_IMAGE =
   'https://ronaldmottram.co.nz/wp-content/uploads/2019/01/default-user-icon-8.jpg';

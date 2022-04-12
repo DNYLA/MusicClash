@@ -17,6 +17,8 @@ import FormPage from './pages/FormPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Clash from './pages/Clash';
+import UserContext from './context/auth';
+import AppProviders from './components/AppProviders';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -31,14 +33,16 @@ const theme = extendTheme({ colors });
 export const App = () => {
   return (
     <BrowserRouter>
-      <ChakraProvider theme={theme}>
-        <WithSubnavigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="create" element={<FormPage />} />
-          <Route path="/clash/:id" element={<Clash />} />
-        </Routes>
-      </ChakraProvider>
+      <AppProviders>
+        <ChakraProvider theme={theme}>
+          <WithSubnavigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="create" element={<FormPage />} />
+            <Route path="/clash/:id" element={<Clash />} />
+          </Routes>
+        </ChakraProvider>
+      </AppProviders>
     </BrowserRouter>
   );
 };

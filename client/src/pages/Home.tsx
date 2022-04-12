@@ -1,11 +1,13 @@
 import { Center, Container, Flex, HStack, Stack } from '@chakra-ui/layout';
 import { Heading } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { GameInfo, MenuCard } from '../components/MenuCard';
+import UserContext from '../context/auth';
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user, login } = useContext(UserContext);
 
   const gameInfo = {
     imageUrl:
@@ -41,7 +43,9 @@ export default function Home() {
         // justifyContent="center"
         minW={'90vw'}
       >
-        <Heading mb={2}>Popular</Heading>
+        <Heading mb={2} onClick={login}>
+          Popular {user?.username} {user?.id}
+        </Heading>
         <Stack
           direction="row"
           // mx={50}
