@@ -24,6 +24,8 @@ model Clash {
   creatorId Int
   creator   User       @relation(fields: [creatorId], references: [id])
   TrackSet  TrackSet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 }
 
 model TrackSet {

@@ -4,7 +4,14 @@ import passport from 'passport';
 
 const router = Router();
 
-router.post('/signup', signup);
+router.post(
+  '/signup',
+  signup,
+  passport.authenticate('local', {
+    successRedirect: 'user',
+    failureRedirect: 'failed',
+  })
+);
 
 router.post(
   '/login',

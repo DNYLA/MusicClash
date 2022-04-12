@@ -20,6 +20,7 @@ import Clash from './pages/Clash';
 import UserContext from './context/auth';
 import AppProviders from './components/AppProviders';
 import Login from './pages/Auth/Login';
+import SignUp from './pages/Auth/SignUp';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -40,6 +41,7 @@ export const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="create" element={<FormPage />} />
             <Route path="/clash/:id" element={<Clash />} />
           </Routes>

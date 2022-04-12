@@ -13,3 +13,5 @@ export const signIn = (username: string, password: string) =>
 
 export const signOut = () => AXIOS.post('/auth/logout');
 export const getUser = () => AXIOS.get(`/auth/user/`);
+export const signUp = (username: string, password: string) =>
+  AXIOS.post<User>('/auth/signup', { username, password });

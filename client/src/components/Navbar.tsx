@@ -35,6 +35,8 @@ import UserContext from '../context/auth';
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { user, logout } = useContext(UserContext);
+  console.log(user);
+
   return (
     <Box>
       <Flex
@@ -75,7 +77,7 @@ export default function WithSubnavigation() {
             <DesktopNav />
           </Flex>
         </Flex>
-        {!!user ? (
+        {user ? (
           <Menu>
             <MenuButton
               as={Button}
@@ -119,6 +121,8 @@ export default function WithSubnavigation() {
               Sign In
             </Button>
             <Button
+              as={Link}
+              to={'/signup'}
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               fontWeight={600}

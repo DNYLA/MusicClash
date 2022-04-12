@@ -24,11 +24,13 @@ export const signup = async (
       },
     });
   } catch (err) {
-    return next('Unable to sign up! Try again.');
+    return res
+      .status(500)
+      .send({ message: 'Unable to process request. Try Again!' });
   }
 
   if (foundUser) {
-    return next('Email already exists. Login instead!');
+    return res.status(403).send({ message: 'Username already exists' });
   }
 
   //Hash with BCrypt
@@ -36,10 +38,15 @@ export const signup = async (
   try {
     hashedPass = bcrypt.hashSync(password, 12);
   } catch (err) {
-    return next('Unable to sign up!');
+    return res
+      .status(500)
+      .send({ message: 'Unable to process request. Try Again!' });
   }
 
-  if (!hashedPass) return next('Unable to sign up!');
+  if (!hashedPass)
+    return res
+      .status(500)
+      .send({ message: 'Unable to process request. Try Again!' });
 
   let newUser;
   try {
@@ -51,17 +58,22 @@ export const signup = async (
       },
     });
   } catch (err) {
-    return next('Unable to sign up! Try again.');
+    return res
+      .status(500)
+      .send({ message: 'Unable to process request. Try Again!' });
   }
 
   //Generate JWT Token
 
   //Send Back Data
-  res.status(203).json({
-    id: newUser.id,
-    username: newUser.username,
-    avatarUrl: newUser.avatarUrl,
-  });
+  // return res.status(203).json({
+  //   id: newUser.id,
+  //   username: newUser.username,
+  //   avatarUrl: newUser.avatarUrl,
+  // });
+
+  // return res.redirect('login');
+  return next();
 };
 
 export const logout = async (
@@ -70,7 +82,7 @@ export const logout = async (
   next: NextFunction
 ) => {
   req.logout();
-  res.send(200);
+  res.sendStatus(200);
 };
 
 export const user = async (req: Request, res: Response, next: NextFunction) => {

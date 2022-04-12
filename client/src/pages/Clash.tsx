@@ -57,6 +57,8 @@ export default function Clash() {
         borderColor={'#0F1011'}
         bgImg={bgUrl}
         objectFit="cover"
+        rounded="lg"
+        dropShadow="lg"
       >
         <Center>
           <Heading fontSize="5xl">Hip Hop Favourites</Heading>{' '}
