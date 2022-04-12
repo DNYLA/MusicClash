@@ -34,28 +34,18 @@ interface PackageTierProps {
   title: string;
   handleChange: (i: number, a: number) => void;
   deleteCallback: (i: number) => void;
-  handleSwitch: (i: number, setOne: boolean) => void;
+  handleSwitch: (i: number) => void;
   artist: string;
-  checked?: boolean;
   position: number;
-  isSetOne?: boolean;
 }
 export const SongCard = ({
   title,
   artist,
-  checked = false,
   position,
   handleChange,
   deleteCallback,
   handleSwitch,
-  isSetOne = true,
 }: PackageTierProps) => {
-  const colorTextLight = checked ? 'white' : 'purple.600';
-  const bgColorLight = checked ? 'purple.400' : 'gray.300';
-
-  const colorTextDark = checked ? 'white' : 'purple.500';
-  const bgColorDark = checked ? 'purple.400' : 'gray.300';
-
   return (
     <Stack
       p={3}
@@ -92,27 +82,6 @@ export const SongCard = ({
         {artist}
       </Heading>
       <Stack direction={['column', 'row']} justify={'end'}>
-        {/* <Button
-          size="md"
-          color={useColorModeValue(colorTextLight, colorTextDark)}
-          bgColor={useColorModeValue(bgColorLight, bgColorDark)}
-          leftIcon={<ExternalLinkIcon />}
-        >
-          Youtube
-        </Button> */}
-        {/* <IconButton
-          variant="outline"
-          aria-label="Search database"
-          colorScheme="facebook"
-          icon={<EditIcon />}
-        />
-        <IconButton
-          variant="outline"
-          aria-label="Search database"
-          colorScheme="red"
-          icon={<DeleteIcon />}
-          onClick={() => deleteCallback(position)}
-        /> */}
         <IconButton
           variant="outline"
           aria-label="Search database"
@@ -129,7 +98,7 @@ export const SongCard = ({
         />
         <OptionButton
           deleteCallback={() => deleteCallback(position)}
-          handleSwitch={() => handleSwitch(position, isSetOne)}
+          handleSwitch={() => handleSwitch(position)}
         />
       </Stack>
     </Stack>
@@ -138,16 +107,15 @@ export const SongCard = ({
 
 interface SongCardContainerProps {
   tracks: Track[];
-  trackSets: Track[][];
+  setId: string;
   setTracks: (tracks: Track[]) => void;
-  handleSwitch: (i: number, setOne: boolean) => void;
-  isSetOne?: boolean;
+  handleSwitch: (i: number) => void;
 }
 const SongCardConainer = ({
   tracks,
   setTracks,
   handleSwitch,
-  isSetOne = true,
+  setId,
 }: SongCardContainerProps) => {
   const updatePosition = (index: number, amount: number) => {
     const newIndex = index + amount;
@@ -198,7 +166,7 @@ const SongCardConainer = ({
             textAlign={'center'}
           >
             <Heading size={'lg'} textAlign={'center'}>
-              Songs From <Text color="purple.400">First Set</Text>
+              Songs From <Text color="purple.400">{setId} Set</Text>
             </Heading>
           </Stack>
           <Stack
@@ -217,31 +185,19 @@ const SongCardConainer = ({
         <Divider />
         {tracks.map((track, i) => {
           return (
-            <>
+            <Box key={i}>
               <SongCard
                 title={track.name}
                 artist={track.artistName}
-                checked={i % 2 === 0 ? false : true}
                 position={i}
                 handleChange={updatePosition}
                 deleteCallback={handleDelete}
                 handleSwitch={handleSwitch}
-                isSetOne={isSetOne}
               />
               <Divider />
-            </>
+            </Box>
           );
         })}
-        {/* <SongCard title={'Starter'} typePlan="Free" options={options} />
-        <Divider />
-        <SongCard
-          title={'Lorem Plus'}
-          checked={true}
-          typePlan="$32.00"
-          options={options}
-        />
-        <Divider />
-        <SongCard title={'Lorem Pro'} typePlan="$50.00" options={options} /> */}
       </Stack>
     </Box>
   );

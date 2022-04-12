@@ -94,7 +94,7 @@ export default function Clash() {
             {Array(5)
               .fill('')
               .map((_, i) => (
-                <ListCard track={trackInfo} />
+                <ListCard key={i} track={trackInfo} />
               ))}
             {/* <ListCard /> */}
           </GridItem>
@@ -109,7 +109,7 @@ export default function Clash() {
             {Array(5)
               .fill('')
               .map((_, i) => (
-                <ListCard track={wuTangTrack} />
+                <ListCard key={i} track={wuTangTrack} />
               ))}
           </GridItem>
           {/* 

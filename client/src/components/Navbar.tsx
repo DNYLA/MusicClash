@@ -35,7 +35,6 @@ import UserContext from '../context/auth';
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   const { user, logout } = useContext(UserContext);
-  console.log(user);
 
   return (
     <Box>

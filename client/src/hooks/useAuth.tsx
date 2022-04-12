@@ -9,16 +9,10 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   const login = useCallback((username, password) => {
-    //Fetch User from API
-    //For now ill setuser to 1
-    console.log(username, password);
     signIn(username, password)
       .then(({ data }) => {
-        console.log('At Data part');
-        console.log(user);
-        console.log(data);
+        navigate('/');
         setUser(data);
-        // navigate('/');
       })
       .catch((err) => {
         const res = err.response;

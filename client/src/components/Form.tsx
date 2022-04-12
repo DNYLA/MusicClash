@@ -16,6 +16,7 @@ import {
   Checkbox,
   RadioGroup,
   Radio,
+  HStack,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
 
@@ -27,12 +28,14 @@ export type Track = {
 
 interface SongFormProps {
   handleSubmit: (firstSet: boolean) => void;
+  handlePublish: () => void;
   setTrack: (track: Track) => void;
   track: Track;
 }
 
 export default function SongForm({
   handleSubmit,
+  handlePublish,
   track,
   setTrack,
 }: SongFormProps) {
@@ -137,7 +140,7 @@ export default function SongForm({
                     />
                   </FormControl>
 
-                  <FormControl as={GridItem} colSpan={[6, 4]}>
+                  <FormControl as={GridItem} colSpan={[6, 6]}>
                     <FormLabel
                       htmlFor="email_address"
                       fontSize="sm"
@@ -180,16 +183,27 @@ export default function SongForm({
                 px={{ base: 4, sm: 6 }}
                 py={3}
                 bg={useColorModeValue('gray.50', 'gray.900')}
-                textAlign="right"
               >
-                <Button
-                  onClick={() => handleSubmit(selectedSet === 0 ? true : false)}
-                  colorScheme="blue"
-                  _focus={{ shadow: '' }}
-                  fontWeight="md"
-                >
-                  Add
-                </Button>
+                <HStack justifyContent="space-between">
+                  <Button
+                    onClick={() =>
+                      handleSubmit(selectedSet === 0 ? true : false)
+                    }
+                    colorScheme="blue"
+                    _focus={{ shadow: '' }}
+                    fontWeight="md"
+                  >
+                    Add
+                  </Button>
+                  <Button
+                    onClick={handlePublish}
+                    colorScheme="green"
+                    _focus={{ shadow: '' }}
+                    fontWeight="md"
+                  >
+                    Publish
+                  </Button>
+                </HStack>
               </Box>
             </chakra.form>
           </GridItem>

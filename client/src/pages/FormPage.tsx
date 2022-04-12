@@ -10,9 +10,11 @@ export type TrackSet = {
 };
 
 export default function FormPage() {
-  const [trackSetOne, setTrackSetOne] = useState<Track[]>([]);
-  const [trackSetTwo, setTrackSetTwo] = useState<Track[]>([]);
-  const [trackSets, setTracksets] = useState<Track[][]>([]);
+  const [trackSets, setTrackSets] = useState<TrackSet>({
+    setOne: [],
+    setTwo: [],
+  });
+
   const [track, setTrack] = useState<Track>({
     name: '',
     artistName: '',
@@ -20,44 +22,67 @@ export default function FormPage() {
   });
 
   const handleSubmit = (isFirstSet: boolean) => {
-    if (isFirstSet) setTrackSetOne([...trackSetOne, track]);
-    else setTrackSetTwo([...trackSetTwo, track]);
+    //Validate Data
+
+    if (isFirstSet)
+      setTrackSets({ ...trackSets, setOne: [...trackSets.setOne, track] });
+    else setTrackSets({ ...trackSets, setTwo: [...trackSets.setTwo, track] });
   };
 
   const handleSwitch = (index: number, isSetOne: boolean) => {
-    const _tracksOne = [...trackSetOne];
-    const _tracksTwo = [...trackSetTwo];
+    const _setOne = [...trackSets.setOne];
+    const _setTwo = [...trackSets.setTwo];
 
     if (isSetOne) {
-      _tracksOne.splice(index, 1);
-      _tracksTwo.push(trackSetOne[index]);
+      _setOne.splice(index, 1);
+      _setTwo.push(trackSets.setOne[index]);
     } else {
-      _tracksTwo.splice(index, 1);
-      _tracksOne.push(trackSetTwo[index]);
+      _setTwo.splice(index, 1);
+      _setOne.push(trackSets.setTwo[index]);
     }
 
-    setTrackSetOne(_tracksOne);
-    setTrackSetTwo(_tracksTwo);
+    setTrackSets({ setOne: _setOne, setTwo: _setTwo });
+  };
+
+  const handleSetOneSwitch = (index: number) => handleSwitch(index, true);
+  const handleSetTwoSwitch = (index: number) => handleSwitch(index, false);
+
+  const setTrackSetOne = (tracks: Track[]) =>
+    setTrackSets({ ...trackSets, setOne: tracks });
+
+  const setTrackSetTwo = (tracks: Track[]) =>
+    setTrackSets({ ...trackSets, setTwo: tracks });
+
+  const handleCreate = () => {
+    //Call API EndPoint
+  };
+
+  const setId = (firstSet: boolean) => {
+    return firstSet ? 'First' : 'Second';
   };
 
   return (
     <div>
       <HStack display="flex" alignItems="stretch">
         <SongCardConainer
-          trackSets={[trackSetOne, trackSetTwo]}
-          tracks={trackSetOne}
+          tracks={trackSets.setOne}
           setTracks={setTrackSetOne}
-          handleSwitch={handleSwitch}
+          handleSwitch={handleSetOneSwitch}
+          setId={setId(true)}
         />
         <SongCardConainer
-          trackSets={[trackSetOne, trackSetTwo]}
-          tracks={trackSetTwo}
+          tracks={trackSets.setTwo}
           setTracks={setTrackSetTwo}
-          handleSwitch={handleSwitch}
-          isSetOne={false}
+          handleSwitch={handleSetTwoSwitch}
+          setId={setId(false)}
         />
       </HStack>
-      <SongForm handleSubmit={handleSubmit} track={track} setTrack={setTrack} />
+      <SongForm
+        handleSubmit={handleSubmit}
+        handlePublish={handleCreate}
+        track={track}
+        setTrack={setTrack}
+      />
     </div>
   );
 }

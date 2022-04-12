@@ -61,6 +61,7 @@ export default function Home() {
             .fill('')
             .map((_, i) => (
               <MenuCard
+                key={i}
                 handleClick={() => navigate(`clash/${i}`)}
                 game={i % 2 === 0 ? gameInfo : gameInfo2}
               />
@@ -93,6 +94,7 @@ export default function Home() {
             .fill('')
             .map((_, i) => (
               <MenuCard
+                key={i}
                 handleClick={() => navigate(`clash/${i}`)}
                 game={i % 2 === 0 ? gameInfo2 : gameInfo}
               />
