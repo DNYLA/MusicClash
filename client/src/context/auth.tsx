@@ -8,7 +8,7 @@ export type AlertNotification = {
 export type User = {
   id: number;
   username: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 };
 
 type UserConextType = {

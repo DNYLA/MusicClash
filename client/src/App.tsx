@@ -10,17 +10,18 @@ import {
   useColorMode,
   extendTheme,
 } from '@chakra-ui/react';
-import WithSubnavigation from './components/Navbar';
-import Dsll from './components/Navbar2';
+import Navbar from './components/Navbar';
 import TableC from './components/Table';
 import FormPage from './pages/FormPage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Clash from './pages/Clash';
 import UserContext from './context/auth';
 import AppProviders from './components/AppProviders';
 import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
+import { useContext } from 'react';
+import Routes from './Routes';
+import { BrowserRouter } from 'react-router-dom';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -37,14 +38,8 @@ export const App = () => {
     <BrowserRouter>
       <AppProviders>
         <ChakraProvider theme={theme}>
-          <WithSubnavigation />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="create" element={<FormPage />} />
-            <Route path="/clash/:id" element={<Clash />} />
-          </Routes>
+          <Navbar />
+          <Routes />
         </ChakraProvider>
       </AppProviders>
     </BrowserRouter>

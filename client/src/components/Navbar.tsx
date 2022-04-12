@@ -32,7 +32,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import UserContext from '../context/auth';
 
-export default function WithSubnavigation() {
+export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   const { user, logout } = useContext(UserContext);
   console.log(user);
@@ -86,12 +86,20 @@ export default function WithSubnavigation() {
               cursor={'pointer'}
               minW={0}
             >
-              <Avatar size={'sm'} src={user.avatarUrl} />
+              <Avatar
+                size={'sm'}
+                name={user.username}
+                src={!!user.avatarUrl ? user.avatarUrl : ''}
+              />
             </MenuButton>
             <MenuList alignItems={'center'}>
               <br />
               <Center>
-                <Avatar size={'2xl'} src={user.avatarUrl} />
+                <Avatar
+                  size={'2xl'}
+                  name={user.username}
+                  src={!!user.avatarUrl ? user.avatarUrl : ''}
+                />
               </Center>
               <br />
               <Center>
