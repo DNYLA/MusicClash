@@ -64,44 +64,27 @@ export const signup = async (
   });
 };
 
-export const login = async (
+export const logout = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body;
+  req.logout();
+  res.send(200);
+};
 
-  let foundUser;
-  try {
-    foundUser = await prisma.user.findFirst({
-      where: { username: { equals: username, mode: 'insensitive' } },
-    });
-  } catch (err) {
-    return next('Unable to login! Try again.');
-  }
+export const user = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.user) return res.status(401).send('Not logged in');
 
-  if (!foundUser) return next('Invalid Credentials!');
+  const { id, username, avatarUrl } = req.user;
 
-  //Verify Password with BCrypt
-  let validPass = false;
-  try {
-    validPass = bcrypt.compareSync(password, foundUser.password);
-  } catch (err) {
-    return next('Unable to login!');
-  }
+  return res.json({ id, username, avatarUrl });
+};
 
-  if (!validPass) {
-    return next('Invalid Credential!');
-  }
-
-  //Generate JWT Token
-  //Send them back As Cookies.
-  //Refresh Token + Access Token
-
-  //Send Data Back
-  res.json({
-    id: foundUser.id,
-    username: foundUser.username,
-    avatarUrl: foundUser.avatarUrl,
-  });
+export const failed = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.status(401).send('Invalid Credentials');
 };

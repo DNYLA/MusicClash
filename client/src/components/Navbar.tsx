@@ -14,6 +14,13 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Menu,
+  MenuButton,
+  Avatar,
+  Center,
+  MenuList,
+  MenuDivider,
+  MenuItem,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -22,10 +29,12 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../context/auth';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
-
+  const { user, logout } = useContext(UserContext);
   return (
     <Box>
       <Flex
@@ -66,35 +75,63 @@ export default function WithSubnavigation() {
             <DesktopNav />
           </Flex>
         </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}
-        >
-          <Button
-            as={Link}
-            to={'/login'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
+        {!!user ? (
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded={'full'}
+              variant={'link'}
+              cursor={'pointer'}
+              minW={0}
+            >
+              <Avatar size={'sm'} src={user.avatarUrl} />
+            </MenuButton>
+            <MenuList alignItems={'center'}>
+              <br />
+              <Center>
+                <Avatar size={'2xl'} src={user.avatarUrl} />
+              </Center>
+              <br />
+              <Center>
+                <p>{user.username}</p>
+              </Center>
+              <br />
+              <MenuDivider />
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Account Settings</MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
+        ) : (
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={6}
           >
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'blue.400'}
-            _hover={{
-              bg: 'blue.300',
-            }}
-          >
-            Sign Up
-          </Button>
-        </Stack>
+            <Button
+              as={Link}
+              to={'/login'}
+              fontSize={'sm'}
+              fontWeight={400}
+              variant={'link'}
+            >
+              Sign In
+            </Button>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'blue.400'}
+              _hover={{
+                bg: 'blue.300',
+              }}
+            >
+              Sign Up
+            </Button>
+          </Stack>
+        )}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>

@@ -1,19 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router';
 import { User } from '../context/auth';
-import { getUser, signIn } from '../utils/api/Axios';
+import { getUser, signIn, signOut } from '../utils/api/Axios';
 
 const useAuth = () => {
   const [user, setUser] = useState<User>();
-
+  const navigate = useNavigate();
   const login = useCallback((username, password) => {
     //Fetch User from API
     //For now ill setuser to 1
     console.log(username, password);
     signIn(username, password)
-      .then(({ data, status }) => {
-        console.log(status);
-        console.log(data);
+      .then(({ data }) => {
         setUser(data);
+        navigate('/');
       })
       .catch((err) => {
         const res = err.response;
@@ -25,7 +25,9 @@ const useAuth = () => {
 
   const logout = useCallback(() => {
     //Call Logout Endpoint
-    setUser(undefined);
+    signOut()
+      .then(() => setUser(undefined))
+      .catch(console.error);
   }, [user?.id]);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const useAuth = () => {
         setUser(data);
       })
       .catch((err) => console.error(err));
-  }, [login, logout]); //Login & Logout only change on mount so this is only called once.
+  }, [login]); //Login & Logout only change on mount so this is only called once.
 
   return { user, login, logout };
 };

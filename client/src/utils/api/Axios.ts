@@ -11,4 +11,5 @@ export const AXIOS = axios.create(CONFIG); //Axios Uses .defaults.baseURL to set
 export const signIn = (username: string, password: string) =>
   AXIOS.post<User>('/auth/login', { username, password });
 
+export const signOut = () => AXIOS.post('/auth/logout');
 export const getUser = () => AXIOS.get(`/auth/user/`);
