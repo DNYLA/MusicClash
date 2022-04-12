@@ -74,11 +74,11 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           <Button
-            as={'a'}
+            as={Link}
+            to={'/login'}
             fontSize={'sm'}
             fontWeight={400}
             variant={'link'}
-            href={'#'}
           >
             Sign In
           </Button>

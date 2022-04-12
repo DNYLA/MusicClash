@@ -43,7 +43,7 @@ export default function Home() {
         // justifyContent="center"
         minW={'90vw'}
       >
-        <Heading mb={2} onClick={login}>
+        <Heading mb={2}>
           Popular {user?.username} {user?.id}
         </Heading>
         <Stack

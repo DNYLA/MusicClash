@@ -9,7 +9,7 @@ export type User = {
 type UserConextType = {
   isLoggedIn: boolean;
   user: User | undefined;
-  login: () => void;
+  login: (username: string, password: string) => void;
   logout: () => void;
 };
 

@@ -19,6 +19,7 @@ import Home from './pages/Home';
 import Clash from './pages/Clash';
 import UserContext from './context/auth';
 import AppProviders from './components/AppProviders';
+import Login from './pages/Auth/Login';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -38,6 +39,7 @@ export const App = () => {
           <WithSubnavigation />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="create" element={<FormPage />} />
             <Route path="/clash/:id" element={<Clash />} />
           </Routes>

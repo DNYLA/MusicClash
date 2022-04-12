@@ -14,21 +14,21 @@ passport.use(
         where: { username: { equals: username, mode: 'insensitive' } },
       });
     } catch (err) {
-      return done('Unable to login! Try again.', false);
+      return done(null, false);
     }
 
-    if (!foundUser) return done('Invalid Credentials!', false);
+    if (!foundUser) return done(null, false);
 
     //Verify Password with BCrypt
     let validPass = false;
     try {
       validPass = bcrypt.compareSync(password, foundUser.password);
     } catch (err) {
-      return done('Unable to login!', false);
+      return done(null, false);
     }
 
     if (!validPass) {
-      return done('Invalid Credential!', false);
+      return done(null, false);
     }
 
     //Send Data Back

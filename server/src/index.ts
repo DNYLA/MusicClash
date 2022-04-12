@@ -3,13 +3,29 @@ import dotenv from 'dotenv';
 import { router as authRouter } from './routes/auth';
 import passport from 'passport';
 import session from 'express-session';
+import cors from 'cors';
+import { getFrontendURL } from './utils';
+import { User as PrismaUser } from '@prisma/client';
 require('./config/passport-local');
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
+declare global {
+  namespace Express {
+    interface User extends PrismaUser {}
+  }
+}
+
 //Middleware
+app.use(
+  cors({
+    origin: [getFrontendURL()],
+    credentials: true,
+  })
+);
+
 app.use(
   session({
     name: 'session-id',
