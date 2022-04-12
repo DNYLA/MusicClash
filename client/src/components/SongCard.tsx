@@ -22,7 +22,7 @@ import {
   WrapItem,
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
-import { Track } from './Form';
+import { Track } from '../utils/types';
 import OptionButton from './Input/OptionButton';
 
 const options = [
@@ -187,8 +187,8 @@ const SongCardConainer = ({
           return (
             <Box key={i}>
               <SongCard
-                title={track.name}
-                artist={track.artistName}
+                title={track.title}
+                artist={track.artist}
                 position={i}
                 handleChange={updatePosition}
                 deleteCallback={handleDelete}

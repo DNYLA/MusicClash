@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { router as authRouter } from './routes/auth';
+import { router as clashRouter } from './routes/clash';
 import passport from 'passport';
 import session from 'express-session';
 import cors from 'cors';
@@ -41,6 +42,7 @@ app.use(passport.session());
 
 //Routes
 app.use('/api/auth', authRouter);
+app.use('/api/clashes', clashRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('<h1>MusicClash</h1>');

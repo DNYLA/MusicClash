@@ -21,11 +21,11 @@ model User {
 model Clash {
   id        Int        @id @default(autoincrement())
   title     String
-  creatorId Int
   creator   User       @relation(fields: [creatorId], references: [id])
+  creatorId Int
   TrackSet  TrackSet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt()
 }
 
 model TrackSet {

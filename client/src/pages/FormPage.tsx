@@ -1,29 +1,35 @@
 import { Avatar } from '@chakra-ui/avatar';
 import { Badge, Box, Flex, Text } from '@chakra-ui/layout';
 import React, { useState } from 'react';
-import SongForm, { Track } from '../components/Form';
+import SongForm from '../components/Form';
 import SongCardConainer, { SongCard } from '../components/SongCard';
 import { HStack } from '@chakra-ui/layout';
+import { CreateClash, Track } from '../utils/types';
+import { createClash } from '../utils/api/Axios';
+import { useNavigate } from 'react-router';
 export type TrackSet = {
   setOne: Track[];
   setTwo: Track[];
 };
 
 export default function FormPage() {
+  const [clash, setClash] = useState<CreateClash>();
   const [trackSets, setTrackSets] = useState<TrackSet>({
     setOne: [],
     setTwo: [],
   });
 
   const [track, setTrack] = useState<Track>({
-    name: '',
-    artistName: '',
-    url: '',
+    title: '',
+    artist: '',
+    youtubeUrl: '',
+    length: '2:15',
   });
 
-  const handleSubmit = (isFirstSet: boolean) => {
-    //Validate Data
+  const navigate = useNavigate();
 
+  const handleAddTrack = (isFirstSet: boolean) => {
+    //Validate Data
     if (isFirstSet)
       setTrackSets({ ...trackSets, setOne: [...trackSets.setOne, track] });
     else setTrackSets({ ...trackSets, setTwo: [...trackSets.setTwo, track] });
@@ -55,6 +61,16 @@ export default function FormPage() {
 
   const handleCreate = () => {
     //Call API EndPoint
+    createClash({
+      title: 'Dans',
+      sets: [
+        { title: 'Roddy Ricch', tracks: [...trackSets.setOne] },
+        { title: 'Wu-Tang', tracks: [...trackSets.setTwo] },
+      ],
+    }).then(({ data }) => {
+      console.log(data);
+      navigate(`/clash/${data.id}`);
+    });
   };
 
   const setId = (firstSet: boolean) => {
@@ -78,7 +94,7 @@ export default function FormPage() {
         />
       </HStack>
       <SongForm
-        handleSubmit={handleSubmit}
+        addTrack={handleAddTrack}
         handlePublish={handleCreate}
         track={track}
         setTrack={setTrack}

@@ -9,7 +9,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
-import { Track } from './Form';
+import { Track } from '../utils/types';
 
 interface ListCardProps {
   track: Track;
@@ -40,7 +40,7 @@ export const ListCard = ({ track }: ListCardProps) => {
           w={1 / 3}
           bgSize="cover"
           style={{
-            backgroundImage: `url('${track.url}')`,
+            backgroundImage: `url('${track.youtubeUrl}')`,
           }}
         ></Box>
 
@@ -50,7 +50,7 @@ export const ListCard = ({ track }: ListCardProps) => {
             fontWeight="bold"
             color={useColorModeValue('gray.800', 'white')}
           >
-            {track.name}
+            {track.title}
           </chakra.h1>
 
           <Flex mt={0} alignItems="center" justifyContent="space-between">
@@ -59,7 +59,7 @@ export const ListCard = ({ track }: ListCardProps) => {
               fontSize="sm"
               color={useColorModeValue('gray.600', 'gray.400')}
             >
-              by {track.artistName}
+              by {track.artist}
               <Badge rounded="full" px="2" colorScheme="teal" ml={3}>
                 2:15
               </Badge>

@@ -19,22 +19,17 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
-
-export type Track = {
-  name: string;
-  artistName: string;
-  url: string;
-};
+import { Track } from '../utils/types';
 
 interface SongFormProps {
-  handleSubmit: (firstSet: boolean) => void;
+  addTrack: (firstSet: boolean) => void;
   handlePublish: () => void;
   setTrack: (track: Track) => void;
   track: Track;
 }
 
 export default function SongForm({
-  handleSubmit,
+  addTrack,
   handlePublish,
   track,
   setTrack,
@@ -106,9 +101,9 @@ export default function SongForm({
                       size="sm"
                       w="full"
                       rounded="md"
-                      value={track.artistName}
+                      value={track.artist}
                       onChange={(e) =>
-                        setTrack({ ...track, artistName: e.target.value })
+                        setTrack({ ...track, artist: e.target.value })
                       }
                     />
                   </FormControl>
@@ -133,9 +128,9 @@ export default function SongForm({
                       size="sm"
                       w="full"
                       rounded="md"
-                      value={track.name}
+                      value={track.title}
                       onChange={(e) =>
-                        setTrack({ ...track, name: e.target.value })
+                        setTrack({ ...track, title: e.target.value })
                       }
                     />
                   </FormControl>
@@ -160,9 +155,9 @@ export default function SongForm({
                       size="sm"
                       w="full"
                       rounded="md"
-                      value={track.url}
+                      value={track.youtubeUrl}
                       onChange={(e) =>
-                        setTrack({ ...track, url: e.target.value })
+                        setTrack({ ...track, youtubeUrl: e.target.value })
                       }
                     />
                   </FormControl>
@@ -186,9 +181,7 @@ export default function SongForm({
               >
                 <HStack justifyContent="space-between">
                   <Button
-                    onClick={() =>
-                      handleSubmit(selectedSet === 0 ? true : false)
-                    }
+                    onClick={() => addTrack(selectedSet === 0 ? true : false)}
                     colorScheme="blue"
                     _focus={{ shadow: '' }}
                     fontWeight="md"
