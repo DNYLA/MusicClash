@@ -10,21 +10,26 @@ import {
   TagLabel,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
+import { Clash } from '../utils/types';
 export type GameInfo = {
-  title: string;
-  imageUrl: string;
   rating: number;
   reviewCount: number;
-  songCount: number;
   playersCount: number;
-  newGame: boolean;
 };
 interface MenuCardProps {
-  game: GameInfo;
+  clash: Clash;
+  extraInfo: GameInfo; //Extra Info is Info that should be in the clash but has not been develoepd yet.
   handleClick: () => void;
 }
 
-export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
+export const MenuCard = ({ clash, extraInfo, handleClick }: MenuCardProps) => {
+  const songAmount =
+    clash.TrackSet[0]._count.tracks + clash.TrackSet[0]._count.tracks;
+
+  const newLimit = new Date();
+  const createdAt = new Date(clash.createdAt);
+  newLimit.setDate(newLimit.getDate() - 7);
+
   return (
     <Flex
       bg={useColorModeValue('#F9FAFB', 'gray.600')}
@@ -37,22 +42,23 @@ export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
     >
       <Box
         bg={useColorModeValue('white', 'gray.800')}
-        maxW="sm"
+        // minW={250}
+        w={'xs'}
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
       >
         <Image
-          src={game.imageUrl}
+          src={clash.thumbnail}
           cursor="pointer"
-          alt={'Game Image'}
+          alt={'Clash Thumbnail'}
           roundedTop="lg"
         />
 
         <Box p="6">
           <Box d="flex" alignItems="baseline">
-            {game.newGame && (
-              <Badge rounded="full" px="2" colorScheme="teal">
+            {createdAt > newLimit && (
+              <Badge rounded="full" px="2" colorScheme="teal" mr={2}>
                 New
               </Badge>
             )}
@@ -62,9 +68,9 @@ export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
               letterSpacing="wide"
               fontSize="xs"
               textTransform="uppercase"
-              ml="2"
+              // ml="2"
             >
-              {game.songCount} songs &bull; {game.playersCount} players
+              {songAmount} songs &bull; {extraInfo.playersCount} players
             </Box>
           </Box>
 
@@ -75,7 +81,7 @@ export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
             lineHeight="tight"
             isTruncated
           >
-            {game.title}
+            {clash.title}
           </Box>
 
           {/* <Box>
@@ -105,11 +111,11 @@ export const MenuCard = ({ game, handleClick }: MenuCardProps) => {
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < game.rating ? 'teal.500' : 'gray.300'}
+                  color={i < extraInfo.rating ? 'teal.500' : 'gray.300'}
                 />
               ))}
             <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {game.reviewCount} reviews
+              {extraInfo.reviewCount} reviews
             </Box>
           </Box>
         </Box>

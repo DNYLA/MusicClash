@@ -4,6 +4,51 @@ import { CreateClash } from 'utils/types';
 
 const prisma = new PrismaClient();
 
+export const getClashes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //http://localhost:3001/api/clashes?popular=true&new=true&limit=50
+  const query = req.query;
+
+  if (!query.popular && !query.new)
+    return res.status(400).send({ message: `Provide Query` });
+
+  let limit = query.limit ? parseInt(query.limit?.toString()) : 50;
+  if (!limit || limit > 50) limit = 50; //Incase ParseInt returns null || limit is > 50
+
+  const fetchPopular =
+    query.popular?.toString().toLowerCase() == 'true' ? true : false;
+  const fetchNew = query.new?.toString().toLowerCase() == 'true' ? true : false;
+
+  let popularClashes;
+  let newClashes;
+  const includeCount = { TrackSet: { select: { _count: true } } };
+  const dateLimit = new Date();
+  dateLimit.setDate(dateLimit.getDate() - 7);
+  try {
+    if (fetchPopular)
+      popularClashes = await prisma.clash.findMany({
+        include: includeCount,
+        take: limit,
+      });
+    if (fetchNew)
+      newClashes = await prisma.clash.findMany({
+        include: includeCount,
+        take: limit,
+        orderBy: [{ createdAt: 'desc' }],
+        where: { createdAt: { gte: dateLimit } },
+      });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: 'Try Again!' });
+  }
+
+  // return res.send({ fetchPopular, fetchNew, limit });
+  return res.send({ popular: popularClashes, new: newClashes });
+};
+
 export const getClash = async (
   req: Request,
   res: Response,
@@ -100,3 +145,24 @@ export const createClash = async (
 
   return res.status(201).send({ id: createdClash.id });
 };
+
+/* Streams Data -> Client
+ * I may switch to this method if i notice a lag when deplying to a web server.
+export const getClashes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  const chunkData = await prisma.clash.findMany({ where: { id: 4 } });
+  res.write(JSON.stringify(chunkData), 'utf8');
+
+  const chunk3 = await prisma.clash.findMany();
+  res.write(JSON.stringify(chunk3), 'utf8');
+  setTimeout(() => {
+    const chunk2 = { type: 'new', dataId: 120 };
+    res.write(JSON.stringify(chunk2), 'utf8');
+    res.end();
+  }, 5000);
+};
+*/

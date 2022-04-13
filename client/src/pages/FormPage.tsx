@@ -70,7 +70,7 @@ export default function FormPage() {
       ],
     }).then(({ data }) => {
       console.log(data);
-      navigate(`/clash/${data.id}`);
+      // navigate(`/clash/${data.id}`);
     });
   };
 

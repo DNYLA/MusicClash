@@ -21,3 +21,9 @@ export const createClash = (clash: CreateClash) =>
   AXIOS.post('/clashes/clash', clash);
 
 export const getClash = (id: string) => AXIOS.get(`/clashes/clash?id=${id}`);
+
+export const getClashes = (
+  getPopular: boolean,
+  getNew: boolean,
+  limit?: number
+) => AXIOS.get(`/clashes?popular=${getPopular}&new=${getNew}&limit=${limit}`);

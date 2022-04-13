@@ -21,6 +21,8 @@ export type Clash = {
   creatorId: number;
   createdAt: Date;
   updatedAt?: Date;
+  bannerImg: string;
+  thumbnail: string;
   TrackSet: TrackSet[];
 };
 
@@ -29,6 +31,7 @@ export type TrackSet = {
   clashId: number;
   title: string;
   tracks: Track[];
+  _count: { tracks: number };
 };
 
 export type Track = {
@@ -43,3 +46,8 @@ export type Track = {
 export interface SkelentonPageProps {
   isLoading: boolean;
 }
+
+export type ClashList = {
+  popular: Clash[];
+  new: Clash[];
+};

@@ -95,7 +95,9 @@ export default function Clash() {
             Play
           </Button>
         </Center>
-        <StatsList />
+        <StatsList
+          songLength={`${clash?.TrackSet[0].tracks.length} : ${clash?.TrackSet[1].tracks.length}`}
+        />
         <Grid
           mt={21}
           // h="200px"
@@ -153,7 +155,7 @@ export default function Clash() {
   );
 }
 
-const StatsList = () => {
+const StatsList = ({ songLength }: any) => {
   return (
     <Container maxW={'7xl'}>
       <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
@@ -170,7 +172,7 @@ const StatsList = () => {
           />
           <StatsCard
             title={'Songs'}
-            stat={'7'}
+            stat={songLength}
             icon={<MdMusicNote size={'3em'} />}
           />
         </SimpleGrid>

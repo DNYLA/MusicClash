@@ -1,35 +1,39 @@
 import { Center, Container, Flex, HStack, Stack } from '@chakra-ui/layout';
 import { Heading } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { GameInfo, MenuCard } from '../components/MenuCard';
 import UserContext from '../context/auth';
+import { getClashes } from '../utils/api/Axios';
+import { ClashList } from '../utils/types';
 
 export default function Home() {
   const navigate = useNavigate();
   const { user, login } = useContext(UserContext);
 
-  const gameInfo = {
-    imageUrl:
-      'https://i.discogs.com/drDRPMm8yMlW1x_tX3Mbdx04Q6ltzHBo-Zbm4zdreBw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NzUw/MjI3LTE1ODE2OTQy/NTQtNjk5NC5qcGVn.jpeg',
-    title: 'Roddy Ricch vs Travis Scott',
+  const extraInfo = {
     rating: 4,
-    songCount: 2,
     playersCount: 12,
     reviewCount: 34,
-    newGame: true,
   };
 
-  const gameInfo2 = {
-    imageUrl:
-      'http://1.bp.blogspot.com/-aVzmKG8bjyg/UMeqkeWLb7I/AAAAAAAABUA/ooU6RkXmZyw/s1600/Good-Kid-m.A.A.d-City-Deluxe-Edition.jpg',
-    title: 'Kendrick Lamar vs Wu-Tang ',
+  const extraInfo2 = {
     rating: 2,
-    songCount: 15,
     playersCount: 20,
     reviewCount: 203,
-    newGame: false,
   };
+
+  const [lists, setLists] = useState<ClashList>({
+    popular: [],
+    new: [],
+  });
+
+  useEffect(() => {
+    getClashes(true, true).then(({ data }) => {
+      console.log(data);
+      setLists(data);
+    });
+  }, []);
 
   return (
     <Flex direction="column" mt={25}>
@@ -43,9 +47,7 @@ export default function Home() {
         // justifyContent="center"
         minW={'90vw'}
       >
-        <Heading mb={2}>
-          Popular {user?.username} {user?.id}
-        </Heading>
+        <Heading mb={2}>Popular</Heading>
         <Stack
           direction="row"
           // mx={50}
@@ -57,15 +59,14 @@ export default function Home() {
           // justify="center"
           overflowX="auto"
         >
-          {Array(9)
-            .fill('')
-            .map((_, i) => (
-              <MenuCard
-                key={i}
-                handleClick={() => navigate(`clash/5`)}
-                game={i % 2 === 0 ? gameInfo : gameInfo2}
-              />
-            ))}
+          {lists.popular.map((clash, i) => (
+            <MenuCard
+              key={i}
+              handleClick={() => navigate(`clash/${clash.id}`)}
+              clash={clash}
+              extraInfo={i % 2 === 0 ? extraInfo : extraInfo2}
+            />
+          ))}
         </Stack>
       </Container>
       <Container
@@ -90,15 +91,14 @@ export default function Home() {
           // justify="center"
           overflowX="auto"
         >
-          {Array(9)
-            .fill('')
-            .map((_, i) => (
-              <MenuCard
-                key={i}
-                handleClick={() => navigate(`clash/5`)}
-                game={i % 2 === 0 ? gameInfo2 : gameInfo}
-              />
-            ))}
+          {lists.new.map((clash, i) => (
+            <MenuCard
+              key={i}
+              handleClick={() => navigate(`clash/${clash.id}`)}
+              clash={clash}
+              extraInfo={i % 2 === 0 ? extraInfo2 : extraInfo}
+            />
+          ))}
         </Stack>
       </Container>
     </Flex>

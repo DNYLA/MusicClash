@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
@@ -23,6 +24,8 @@ model Clash {
   title     String
   creator   User       @relation(fields: [creatorId], references: [id])
   creatorId Int
+  bannerImg String?
+  thumbnail String?
   TrackSet  TrackSet[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt()
@@ -33,7 +36,7 @@ model TrackSet {
   clashId Int
   title   String
   tracks  Track[]
-  Clash   Clash   @relation(fields: [clashId], references: [id])
+  Clash   Clash   @relation(fields: [clashId], references: [id], onDelete: Cascade)
 }
 
 model Track {
@@ -43,7 +46,7 @@ model Track {
   length     String
   youtubeUrl String
   setId      Int
-  trackSet   TrackSet @relation(fields: [setId], references: [id])
+  trackSet   TrackSet @relation(fields: [setId], references: [id], onDelete: Cascade)
 
   @@id([setId, position], name: "id")
 }
