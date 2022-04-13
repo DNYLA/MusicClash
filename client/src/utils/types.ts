@@ -39,3 +39,7 @@ export type Track = {
   youtubeUrl: string;
   setId: number;
 };
+
+export interface SkelentonPageProps {
+  isLoading: boolean;
+}

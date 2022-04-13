@@ -20,7 +20,7 @@ export const ListCard = ({ track }: ListCardProps) => {
   return (
     <Flex
       bg={useColorModeValue('#F9FAFB', 'gray.600')}
-      p={1}
+      p={0.5}
       rounded="lg"
       width={'100%'}
       alignItems="center"
