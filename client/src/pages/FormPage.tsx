@@ -7,13 +7,13 @@ import { HStack } from '@chakra-ui/layout';
 import { CreateClash, Track } from '../utils/types';
 import { createClash } from '../utils/api/Axios';
 import { useNavigate } from 'react-router';
+import { ClashDetails } from '../components/ClashDetails';
 export type TrackSet = {
   setOne: Track[];
   setTwo: Track[];
 };
 
 export default function FormPage() {
-  const [clash, setClash] = useState<CreateClash>();
   const [trackSets, setTrackSets] = useState<TrackSet>({
     setOne: [],
     setTwo: [],
@@ -59,13 +59,14 @@ export default function FormPage() {
   const setTrackSetTwo = (tracks: Track[]) =>
     setTrackSets({ ...trackSets, setTwo: tracks });
 
-  const handleCreate = () => {
+  const handleCreate = (details: ClashDetails) => {
+    console.log('here');
     //Call API EndPoint
     createClash({
-      title: 'Dans',
+      title: details.title,
       sets: [
-        { title: 'Roddy Ricch', tracks: [...trackSets.setOne] },
-        { title: 'Wu-Tang', tracks: [...trackSets.setTwo] },
+        { title: details.setOneName, tracks: [...trackSets.setOne] },
+        { title: details.setTwoName, tracks: [...trackSets.setTwo] },
       ],
     }).then(({ data }) => {
       console.log(data);

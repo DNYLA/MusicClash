@@ -16,12 +16,14 @@ import {
   List,
   ListIcon,
   ListItem,
+  Image,
   Stack,
   Text,
   useColorModeValue,
   WrapItem,
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
+import { getYoutubeThumbnail } from '../utils';
 import { Track } from '../utils/types';
 import OptionButton from './Input/OptionButton';
 
@@ -31,16 +33,14 @@ const options = [
   { id: 3, desc: 'Monthly Updates' },
 ];
 interface PackageTierProps {
-  title: string;
+  position: number;
+  track: Track;
   handleChange: (i: number, a: number) => void;
   deleteCallback: (i: number) => void;
   handleSwitch: (i: number) => void;
-  artist: string;
-  position: number;
 }
 export const SongCard = ({
-  title,
-  artist,
+  track,
   position,
   handleChange,
   deleteCallback,
@@ -61,7 +61,7 @@ export const SongCard = ({
       alignItems={{ md: 'center' }}
     >
       <Heading textAlign={'center'} size={'lg'} w={200}>
-        {title}
+        {track.title}
       </Heading>
       {/* <List spacing={3} textAlign="start">
         {options.map((desc, id) => (
@@ -73,13 +73,14 @@ export const SongCard = ({
       </List> */}
       <WrapItem>
         <Avatar
-          name={title}
+          src={getYoutubeThumbnail(track.youtubeUrl)}
+          name={track.title}
           size={'lg'}
-          src="https://i1.wp.com/themusicalhype.com/wp-content/uploads/2019/12/roddy-ricch-please-excuse-me-for-being-antisocial-atlantic.jpeg?ssl=1"
+          objectFit={'cover'}
         />
       </WrapItem>
       <Heading size={'md'} width={200} textAlign={'center'}>
-        {artist}
+        {track.artist}
       </Heading>
       <Stack direction={['column', 'row']} justify={'end'}>
         <IconButton
@@ -187,8 +188,7 @@ const SongCardConainer = ({
           return (
             <Box key={i}>
               <SongCard
-                title={track.title}
-                artist={track.artist}
+                track={track}
                 position={i}
                 handleChange={updatePosition}
                 deleteCallback={handleDelete}

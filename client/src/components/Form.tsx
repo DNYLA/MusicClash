@@ -17,13 +17,15 @@ import {
   RadioGroup,
   Radio,
   HStack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
 import { Track } from '../utils/types';
+import { ClashDetails, ClashDetailsModal } from './ClashDetails';
 
 interface SongFormProps {
   addTrack: (firstSet: boolean) => void;
-  handlePublish: () => void;
+  handlePublish: (details: ClashDetails) => void;
   setTrack: (track: Track) => void;
   track: Track;
 }
@@ -35,8 +37,22 @@ export default function SongForm({
   setTrack,
 }: SongFormProps) {
   const [selectedSet, setSelectedSet] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [clashInfo, setClashInfo] = useState<ClashDetails>({
+    title: '',
+    setOneName: '',
+    setTwoName: '',
+  });
+
   return (
     <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
+      <ClashDetailsModal
+        isOpen={isOpen}
+        onClose={onClose}
+        details={clashInfo}
+        setDetails={setClashInfo}
+        handleSubmit={() => handlePublish(clashInfo)}
+      />
       <Box visibility={{ base: 'hidden', sm: 'visible' }} aria-hidden="true">
         <Box py={5}>
           <Box
@@ -45,7 +61,6 @@ export default function SongForm({
           ></Box>
         </Box>
       </Box>
-
       <Box mt={[10, 0]}>
         <SimpleGrid
           display={{ base: 'initial', md: 'grid' }}
@@ -189,7 +204,7 @@ export default function SongForm({
                     Add
                   </Button>
                   <Button
-                    onClick={handlePublish}
+                    onClick={onOpen}
                     colorScheme="green"
                     _focus={{ shadow: '' }}
                     fontWeight="md"

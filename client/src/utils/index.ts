@@ -4,3 +4,16 @@ export const getAPIUrl = () => {
 
   return url;
 };
+
+export const getYoutubeThumbnail = (url: string) => {
+  // Example URL: https://www.youtube.com/watch?v=CJOZc02VwJM
+
+  const [websiteUrl, watchId] = url.split('watch?v=');
+  // console.log(split1);
+
+  if (!watchId) {
+    return '';
+  }
+
+  return `https://img.youtube.com/vi/${watchId}/maxresdefault.jpg`;
+};

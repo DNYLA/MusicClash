@@ -37,6 +37,7 @@ app.use(
 );
 
 app.use(express.json()); //Parses All incoming data into JSON
+app.use(express.urlencoded({ extended: false })); //Allows us to retreive data from Form Submissions
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -4,6 +4,16 @@ import { CreateClash } from 'utils/types';
 
 const prisma = new PrismaClient();
 
+export const getClash = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const query = req.query;
+  // if (!query) res
+  res.send(query.id);
+};
+
 export const createClash = async (
   req: Request,
   res: Response,
@@ -19,14 +29,26 @@ export const createClash = async (
   const setOne = clash.sets[0];
   const setTwo = clash.sets[1];
 
-  const setOneValid = !!(setOne && setOne.tracks.length > 0);
-  const setTwoValid = !!(setTwo && setTwo.tracks.length > 0);
+  if (!clash) return res.status(400).send(); //No Response because user is manually posting (We Dont want them to know why its cancelled)
 
-  if (!setOneValid || !setTwoValid)
-    return res
-      .status(400)
-      .send({ message: 'Provide two sets with atleat one track in each.' });
+  //undefined data can cause an error
+  try {
+    const validTitles = !!(clash.title && setOne.title && setTwo.title);
+    const setOneValid = !!(setOne && setOne.tracks.length > 0);
+    const setTwoValid = !!(setTwo && setTwo.tracks.length > 0);
 
+    if (!validTitles)
+      return res
+        .status(400)
+        .send({ message: `Clash title or set titles can't be empty.` });
+
+    if (!setOneValid || !setTwoValid)
+      return res
+        .status(400)
+        .send({ message: 'Provide two sets with atleat one track in each.' });
+  } catch (err) {
+    return res.status(400);
+  }
   //Sets Position for each track
   setOne.tracks.forEach((t, i) => (t.position = i));
   setTwo.tracks.forEach((t, i) => (t.position = i));
