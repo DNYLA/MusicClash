@@ -19,3 +19,5 @@ export const signUp = (username: string, password: string) =>
 
 export const createClash = (clash: CreateClash) =>
   AXIOS.post('/clashes/clash', clash);
+
+export const getClash = (id: string) => AXIOS.get(`/clashes/clash?id=${id}`);

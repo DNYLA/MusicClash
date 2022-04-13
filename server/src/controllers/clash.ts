@@ -10,8 +10,23 @@ export const getClash = async (
   next: NextFunction
 ) => {
   const query = req.query;
-  // if (!query) res
-  res.send(query.id);
+  if (!query || !query.id) return res.sendStatus(400);
+
+  let fetchedClash;
+  try {
+    const id = parseInt(query.id.toString());
+
+    if (!id) return res.status(400).send({ message: 'Invalid ID' });
+
+    fetchedClash = await prisma.clash.findUnique({
+      where: { id },
+      include: { TrackSet: { include: { tracks: true } } },
+    });
+  } catch (err) {
+    return res.status(400).send({ message: 'Unable to fetch clash.' });
+  }
+
+  return res.send(fetchedClash);
 };
 
 export const createClash = async (

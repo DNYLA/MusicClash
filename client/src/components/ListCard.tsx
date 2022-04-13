@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import { Track } from '../utils/types';
+import { getYoutubeThumbnail } from '../utils';
 
 interface ListCardProps {
   track: Track;
@@ -40,7 +41,7 @@ export const ListCard = ({ track }: ListCardProps) => {
           w={1 / 3}
           bgSize="cover"
           style={{
-            backgroundImage: `url('${track.youtubeUrl}')`,
+            backgroundImage: `url('${getYoutubeThumbnail(track.youtubeUrl)}')`,
           }}
         ></Box>
 

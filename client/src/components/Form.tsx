@@ -20,14 +20,14 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
-import { Track } from '../utils/types';
+import { CreateTrack } from '../utils/types';
 import { ClashDetails, ClashDetailsModal } from './ClashDetails';
 
 interface SongFormProps {
   addTrack: (firstSet: boolean) => void;
   handlePublish: (details: ClashDetails) => void;
-  setTrack: (track: Track) => void;
-  track: Track;
+  setTrack: (track: CreateTrack) => void;
+  track: CreateTrack;
 }
 
 export default function SongForm({

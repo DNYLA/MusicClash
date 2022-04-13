@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { getYoutubeThumbnail } from '../utils';
-import { Track } from '../utils/types';
+import { CreateTrack } from '../utils/types';
 import OptionButton from './Input/OptionButton';
 
 const options = [
@@ -34,7 +34,7 @@ const options = [
 ];
 interface PackageTierProps {
   position: number;
-  track: Track;
+  track: CreateTrack;
   handleChange: (i: number, a: number) => void;
   deleteCallback: (i: number) => void;
   handleSwitch: (i: number) => void;
@@ -107,9 +107,9 @@ export const SongCard = ({
 };
 
 interface SongCardContainerProps {
-  tracks: Track[];
+  tracks: CreateTrack[];
   setId: string;
-  setTracks: (tracks: Track[]) => void;
+  setTracks: (tracks: CreateTrack[]) => void;
   handleSwitch: (i: number) => void;
 }
 const SongCardConainer = ({

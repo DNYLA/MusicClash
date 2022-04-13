@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import SongForm from '../components/Form';
 import SongCardConainer, { SongCard } from '../components/SongCard';
 import { HStack } from '@chakra-ui/layout';
-import { CreateClash, Track } from '../utils/types';
+import { CreateClash, CreateTrack } from '../utils/types';
 import { createClash } from '../utils/api/Axios';
 import { useNavigate } from 'react-router';
 import { ClashDetails } from '../components/ClashDetails';
 export type TrackSet = {
-  setOne: Track[];
-  setTwo: Track[];
+  setOne: CreateTrack[];
+  setTwo: CreateTrack[];
 };
 
 export default function FormPage() {
@@ -19,7 +19,7 @@ export default function FormPage() {
     setTwo: [],
   });
 
-  const [track, setTrack] = useState<Track>({
+  const [track, setTrack] = useState<CreateTrack>({
     title: '',
     artist: '',
     youtubeUrl: '',
@@ -53,10 +53,10 @@ export default function FormPage() {
   const handleSetOneSwitch = (index: number) => handleSwitch(index, true);
   const handleSetTwoSwitch = (index: number) => handleSwitch(index, false);
 
-  const setTrackSetOne = (tracks: Track[]) =>
+  const setTrackSetOne = (tracks: CreateTrack[]) =>
     setTrackSets({ ...trackSets, setOne: tracks });
 
-  const setTrackSetTwo = (tracks: Track[]) =>
+  const setTrackSetTwo = (tracks: CreateTrack[]) =>
     setTrackSets({ ...trackSets, setTwo: tracks });
 
   const handleCreate = (details: ClashDetails) => {
