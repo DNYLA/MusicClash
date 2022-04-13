@@ -61,7 +61,10 @@ export default function Clash() {
       .then(({ data }) => {
         setClash(data);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+        navigate('/');
+      });
   }, [id]);
 
   return (

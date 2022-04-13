@@ -15,16 +15,21 @@ export const getClash = async (
   let fetchedClash;
   try {
     const id = parseInt(query.id.toString());
-
-    if (!id) return res.status(400).send({ message: 'Invalid ID' });
+    if (isNaN(id))
+      return res.status(400).send({ message: `Clash doesn't exist` });
 
     fetchedClash = await prisma.clash.findUnique({
       where: { id },
       include: { TrackSet: { include: { tracks: true } } },
     });
+    console.log('here');
   } catch (err) {
+    console.log(err);
     return res.status(400).send({ message: 'Unable to fetch clash.' });
   }
+
+  if (!fetchedClash)
+    return res.status(400).send({ message: `Clash doesn't exist` });
 
   return res.send(fetchedClash);
 };
