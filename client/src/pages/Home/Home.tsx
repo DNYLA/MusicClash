@@ -2,10 +2,10 @@ import { Center, Container, Flex, HStack, Stack } from '@chakra-ui/layout';
 import { Heading } from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { GameInfo, MenuCard } from '../components/MenuCard';
-import UserContext from '../context/auth';
-import { getClashes } from '../utils/api/Axios';
-import { ClashList } from '../utils/types';
+import { GameInfo, MenuCard } from '../../components/MenuCard';
+import UserContext from '../../context/auth';
+import { getClashes } from '../../utils/api/Axios';
+import { ClashList } from '../../utils/types';
 
 export default function Home() {
   const navigate = useNavigate();

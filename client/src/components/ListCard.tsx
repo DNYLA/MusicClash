@@ -50,6 +50,7 @@ export const ListCard = ({ track }: ListCardProps) => {
             fontSize="2xl"
             fontWeight="bold"
             color={useColorModeValue('gray.800', 'white')}
+            isTruncated
           >
             {track.title}
           </chakra.h1>

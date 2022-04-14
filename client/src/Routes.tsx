@@ -5,7 +5,7 @@ import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
 import Clash from './pages/Clash/Clash';
 import FormPage from './pages/FormPage';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 
 export default function Routes() {
   const { isLoggedIn } = useContext(UserContext);

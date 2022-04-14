@@ -1,3 +1,4 @@
+import { StarIcon } from '@chakra-ui/icons';
 import {
   Box,
   chakra,
@@ -24,7 +25,7 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { BsPerson } from 'react-icons/bs';
+import { BsPerson, BsStar } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
 import { FiServer } from 'react-icons/fi';
 import { MdMusicNote } from 'react-icons/md';
@@ -42,7 +43,7 @@ export default function Clash() {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const textCol = useColorModeValue('gray.400', 'gray.400');
   useEffect(() => {
     if (!id) return navigate('/');
     getClash(id)
@@ -57,9 +58,37 @@ export default function Clash() {
   }, [id]);
 
   if (isLoading) return <ClashSkeleton isLoading={isLoading} />;
-
+  const basicBoxStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    boxSize: '250px',
+    color: 'white',
+    textShadow: '0 0 20px black',
+    fontWeight: 'bold',
+    fontSize: '20px',
+    px: 4,
+    background: `url(${clash?.thumbnail})`,
+    width: '100%',
+    height: 150,
+    objectFit: 'scale-down',
+    bgSize: 'contain',
+  };
   return (
     <Box m={5}>
+      {/* <Box sx={basicBoxStyles} filter="grayscale(80%)">
+        Box with Filter
+      </Box>
+      <HStack d="flex" position="absolute" w={100} h={100}>
+        <Text zIndex={1000} blur="0px">
+          Test
+        </Text>
+        <Box sx={basicBoxStyles} zIndex={0} filter="auto" blur="2px">
+          <Flex></Flex>
+        </Box>
+      </HStack> */}
+
       <Box
         p={5}
         shadow="md"
@@ -68,20 +97,44 @@ export default function Clash() {
         height={150}
         boxShadow="2xl"
         border={'1px'}
+        bgImg={clash?.thumbnail}
+        // bgSize={'contain'}
+        bgSize={'contain'}
         borderColor={'#0F1011'}
-        bgImg={bgUrl}
-        objectFit="cover"
+        objectFit={'scale-down'}
         rounded="lg"
-        dropShadow="lg"
+        // blur="2px"
+        filter={'grayscale(80%)'}
+        color={'white'}
+        textShadow={'0 0 20px black'}
       >
-        <Center>
-          <Heading fontSize="5xl">{clash?.title}</Heading>
-        </Center>
-        <HStack justifyContent="center">
-          <Text>{clash?.TrackSet[0].title}</Text>
-          <Text>vs</Text>
-          <Text>{clash?.TrackSet[1].title}</Text>
-        </HStack>
+        <Box
+          blur={'5px'}
+          filter="auto"
+          // background={'yellow 0.1'}
+          dropShadow={'0 0 30px #333'}
+        >
+          <Center>
+            <Heading fontSize="5xl" textShadow={`4px 5px #000`}>
+              {clash?.title}
+            </Heading>
+          </Center>
+          <HStack
+            justifyContent="center"
+            textColor={''}
+            // textShadow={`4px 5px #000`}
+            dropShadow={'0 0 30px #333'}
+            // color={textCol}
+            color={'blue.100'}
+            fontSize={'2xl'}
+            outline={'5px'}
+            outlineColor={'red'}
+          >
+            <Text>{clash?.TrackSet[0].title}</Text>
+            <Text>vs</Text>
+            <Text>{clash?.TrackSet[1].title}</Text>
+          </HStack>
+        </Box>
       </Box>
 
       <Box mt={5}>
@@ -161,14 +214,14 @@ const StatsList = ({ songLength }: any) => {
       <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-            title={'Current Players'}
+            title={'Total Plays'}
             stat={'5,000'}
             icon={<BsPerson size={'3em'} />}
           />
           <StatsCard
-            title={'Lobbies'}
-            stat={'1,000'}
-            icon={<FiServer size={'3em'} />}
+            title={'Rating'}
+            stat={'4.2'}
+            icon={<BsStar size={'3em'} />}
           />
           <StatsCard
             title={'Songs'}
