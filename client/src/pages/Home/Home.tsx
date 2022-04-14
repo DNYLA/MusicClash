@@ -1,16 +1,23 @@
 import { Center, Container, Flex, HStack, Stack } from '@chakra-ui/layout';
-import { Heading } from '@chakra-ui/react';
+import {
+  Collapse,
+  Heading,
+  ScaleFade,
+  Slide,
+  SlideFade,
+} from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { GameInfo, MenuCard } from '../../components/MenuCard';
 import UserContext from '../../context/auth';
 import { getClashes } from '../../utils/api/Axios';
 import { ClashList } from '../../utils/types';
+import HomeSkeletonCards from './card-skeleton';
 
 export default function Home() {
   const navigate = useNavigate();
   const { user, login } = useContext(UserContext);
-
+  const [isLoading, setIsLoading] = useState(true);
   const extraInfo = {
     rating: 4,
     playersCount: 12,
@@ -32,6 +39,7 @@ export default function Home() {
     getClashes(true, true).then(({ data }) => {
       console.log(data);
       setLists(data);
+      setTimeout(() => setIsLoading(false), 1500);
     });
   }, []);
 
@@ -55,23 +63,28 @@ export default function Home() {
           // m={0}
           // d="flex"
           alignItems="center"
-          // // justifyContent="center"
+          // justifyContent="center"
           // justify="center"
           overflowX="auto"
         >
-          {lists.popular.map((clash, i) => (
-            <MenuCard
-              key={i}
-              handleClick={() => navigate(`clash/${clash.id}`)}
-              clash={clash}
-              extraInfo={i % 2 === 0 ? extraInfo : extraInfo2}
-            />
-          ))}
+          {!isLoading &&
+            lists.popular.map((clash, i) => (
+              <MenuCard
+                key={i}
+                handleClick={() => navigate(`clash/${clash.id}`)}
+                clash={clash}
+                extraInfo={i % 2 === 0 ? extraInfo : extraInfo2}
+              />
+            ))}
+          <Collapse in={isLoading} animateOpacity>
+            <HomeSkeletonCards isLoading={true} amount={6} />
+          </Collapse>
         </Stack>
       </Container>
       <Container
         // direction="row"
         // mx={50}
+        mt={10}
         mb={5}
         // d="flex"
         // alignItems="center"
@@ -91,14 +104,18 @@ export default function Home() {
           // justify="center"
           overflowX="auto"
         >
-          {lists.new.map((clash, i) => (
-            <MenuCard
-              key={i}
-              handleClick={() => navigate(`clash/${clash.id}`)}
-              clash={clash}
-              extraInfo={i % 2 === 0 ? extraInfo2 : extraInfo}
-            />
-          ))}
+          {!isLoading &&
+            lists.new.map((clash, i) => (
+              <MenuCard
+                key={i}
+                handleClick={() => navigate(`clash/${clash.id}`)}
+                clash={clash}
+                extraInfo={i % 2 === 0 ? extraInfo2 : extraInfo}
+              />
+            ))}
+          <Collapse in={isLoading} animateOpacity>
+            <HomeSkeletonCards isLoading={true} amount={6} />
+          </Collapse>
         </Stack>
       </Container>
     </Flex>

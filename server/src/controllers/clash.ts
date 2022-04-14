@@ -146,23 +146,22 @@ export const createClash = async (
   return res.status(201).send({ id: createdClash.id });
 };
 
-/* Streams Data -> Client
- * I may switch to this method if i notice a lag when deplying to a web server.
-export const getClashes = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  const chunkData = await prisma.clash.findMany({ where: { id: 4 } });
-  res.write(JSON.stringify(chunkData), 'utf8');
+// Streams Data -> Client
+// I may switch to this method if i notice a lag when deplying to a web server.
+// export const getClashes = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   res.writeHead(200, { 'Content-Type': 'application/json' });
+//   const chunkData = await prisma.clash.findMany({ where: { id: 4 } });
+//   res.write(JSON.stringify(chunkData), 'utf8');
 
-  const chunk3 = await prisma.clash.findMany();
-  res.write(JSON.stringify(chunk3), 'utf8');
-  setTimeout(() => {
-    const chunk2 = { type: 'new', dataId: 120 };
-    res.write(JSON.stringify(chunk2), 'utf8');
-    res.end();
-  }, 5000);
-};
-*/
+//   const chunk3 = await prisma.clash.findMany();
+//   res.write(JSON.stringify(chunk3), 'utf8');
+//   setTimeout(() => {
+//     const chunk2 = { type: 'new', dataId: 120 };
+//     res.write(JSON.stringify(chunk2), 'utf8');
+//     res.end();
+//   }, 5000);
+// };

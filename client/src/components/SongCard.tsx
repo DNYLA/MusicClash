@@ -170,7 +170,7 @@ const SongCardConainer = ({
               Songs From <Text color="purple.400">{setId} Set</Text>
             </Heading>
           </Stack>
-          {/* <Stack
+          <Stack
             width={{
               base: '100%',
               md: '60%',
@@ -181,7 +181,7 @@ const SongCardConainer = ({
               is the order they are played in the game. You can hold one of the
               cards to re-arange. The second list is displayed below.
             </Text>
-          </Stack> */}
+          </Stack>
         </Stack>
         <Divider />
         {tracks.map((track, i) => {

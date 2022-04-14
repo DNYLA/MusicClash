@@ -45,6 +45,7 @@ export type Track = {
 
 export interface SkelentonPageProps {
   isLoading: boolean;
+  amount?: number;
 }
 
 export type ClashList = {

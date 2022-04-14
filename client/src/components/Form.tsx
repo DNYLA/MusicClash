@@ -109,7 +109,7 @@ export default function SongForm({
                       type="text"
                       name="artist_name"
                       id="artist_name"
-                      autoComplete="given-name"
+                      autoComplete="artist_name"
                       mt={1}
                       focusBorderColor="brand.400"
                       shadow="sm"
@@ -125,7 +125,7 @@ export default function SongForm({
 
                   <FormControl as={GridItem} colSpan={[6, 3]}>
                     <FormLabel
-                      htmlFor="last_name"
+                      htmlFor="track_name"
                       fontSize="sm"
                       fontWeight="md"
                       color={useColorModeValue('gray.700', 'gray.50')}
@@ -134,9 +134,9 @@ export default function SongForm({
                     </FormLabel>
                     <Input
                       type="text"
-                      name="last_name"
-                      id="last_name"
-                      autoComplete="family-name"
+                      name="track_name"
+                      id="track_name"
+                      autoComplete="track_name"
                       mt={1}
                       focusBorderColor="brand.400"
                       shadow="sm"
@@ -152,7 +152,7 @@ export default function SongForm({
 
                   <FormControl as={GridItem} colSpan={[6, 6]}>
                     <FormLabel
-                      htmlFor="email_address"
+                      htmlFor="youtube_url"
                       fontSize="sm"
                       fontWeight="md"
                       color={useColorModeValue('gray.700', 'gray.50')}
@@ -161,9 +161,9 @@ export default function SongForm({
                     </FormLabel>
                     <Input
                       type="text"
-                      name="email_address"
-                      id="email_address"
-                      autoComplete="email"
+                      name="youtube_url"
+                      id="youtube_url"
+                      autoComplete="url"
                       mt={1}
                       focusBorderColor="brand.400"
                       shadow="sm"

@@ -30,12 +30,22 @@ export const MenuCard = ({ clash, extraInfo, handleClick }: MenuCardProps) => {
   const createdAt = new Date(clash.createdAt);
   newLimit.setDate(newLimit.getDate() - 7);
 
+  const grayCol = useColorModeValue('#F9FAFB', 'gray.600');
+
   return (
     <Flex
       bg={useColorModeValue('#F9FAFB', 'gray.600')}
-      p={3}
-      mr={5}
-      // rounded="lg"
+      p={2}
+      style={{ transition: 'all 250ms ease-in' }}
+      // onMouseOver={(e) => {
+      //   e.currentTarget.style.backgroundColor = '#F9FAFB';
+      // }}
+      // onMouseOut={(e) => {
+      //   console.log(grayCol);
+      //   e.currentTarget.style.backgroundColor = grayCol;
+      // }}
+      _hover={{ bg: 'teal.600' }}
+      rounded={'xl'}
       alignItems="center"
       justifyContent="center"
       onClick={handleClick}
@@ -43,7 +53,8 @@ export const MenuCard = ({ clash, extraInfo, handleClick }: MenuCardProps) => {
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         // minW={250}
-        w={'xs'}
+        // w={'xs'}
+        w={250}
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
@@ -105,7 +116,7 @@ export const MenuCard = ({ clash, extraInfo, handleClick }: MenuCardProps) => {
             </Tag>
           </Box> */}
 
-          <Box d="flex" mt="3" alignItems="center">
+          <Box d="flex" alignItems="center">
             {Array(5)
               .fill('')
               .map((_, i) => (
