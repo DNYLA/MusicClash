@@ -7,6 +7,10 @@ import session from 'express-session';
 import cors from 'cors';
 import { getFrontendURL } from './utils';
 import { User as PrismaUser } from '@prisma/client';
+import { Server } from 'socket.io';
+
+import http from 'http';
+import { socketHandler } from './utils/socket';
 require('./config/passport-local');
 dotenv.config();
 
@@ -41,6 +45,16 @@ app.use(express.urlencoded({ extended: false })); //Allows us to retreive data f
 app.use(passport.initialize());
 app.use(passport.session());
 
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.FRONT_END_URL,
+    // methods: ['GET', 'POST'],
+  },
+});
+
+socketHandler(io);
+
 //Routes
 app.use('/api/auth', authRouter);
 app.use('/api/clashes', clashRouter);
@@ -49,6 +63,6 @@ app.get('/', (req: Request, res: Response) => {
   res.send('<h1>MusicClash</h1>');
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });

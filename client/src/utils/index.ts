@@ -5,6 +5,13 @@ export const getAPIUrl = () => {
   return url;
 };
 
+export const getSocketIoURL = () => {
+  const url = process.env.REACT_APP_SOCKET_URL;
+  if (!url) throw 'Socket URL not defined';
+
+  return url;
+};
+
 export const getYoutubeThumbnail = (url: string) => {
   // Example URL: https://www.youtube.com/watch?v=CJOZc02VwJM
 

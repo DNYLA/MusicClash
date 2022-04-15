@@ -5,6 +5,7 @@ import {
   Skeleton,
   useColorModeValue,
   Badge,
+  ScaleFade,
 } from '@chakra-ui/react';
 import React from 'react';
 import { SkelentonPageProps } from '../../utils/types';
@@ -14,13 +15,15 @@ export default function HomeSkeletonCards({
   amount,
 }: SkelentonPageProps) {
   return (
-    <Flex>
-      {Array(amount)
-        .fill('')
-        .map((_, i) => (
-          <SkeletonCard />
-        ))}
-    </Flex>
+    <ScaleFade in={isLoading} initialScale={0.8} unmountOnExit>
+      <Flex>
+        {Array(amount)
+          .fill('')
+          .map((_, i) => (
+            <SkeletonCard />
+          ))}
+      </Flex>
+    </ScaleFade>
   );
 }
 

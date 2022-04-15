@@ -67,6 +67,7 @@ export default function Home() {
           // justify="center"
           overflowX="auto"
         >
+          <HomeSkeletonCards isLoading={isLoading} amount={6} />
           {!isLoading &&
             lists.popular.map((clash, i) => (
               <MenuCard
@@ -76,9 +77,6 @@ export default function Home() {
                 extraInfo={i % 2 === 0 ? extraInfo : extraInfo2}
               />
             ))}
-          <Collapse in={isLoading} animateOpacity>
-            <HomeSkeletonCards isLoading={true} amount={6} />
-          </Collapse>
         </Stack>
       </Container>
       <Container
@@ -104,6 +102,7 @@ export default function Home() {
           // justify="center"
           overflowX="auto"
         >
+          <HomeSkeletonCards isLoading={isLoading} amount={6} />
           {!isLoading &&
             lists.new.map((clash, i) => (
               <MenuCard
@@ -113,9 +112,6 @@ export default function Home() {
                 extraInfo={i % 2 === 0 ? extraInfo2 : extraInfo}
               />
             ))}
-          <Collapse in={isLoading} animateOpacity>
-            <HomeSkeletonCards isLoading={true} amount={6} />
-          </Collapse>
         </Stack>
       </Container>
     </Flex>
