@@ -13,7 +13,7 @@ const colors = {
     700: '#2a69ac',
   },
 };
-const theme = extendTheme({ colors });
+const theme = extendTheme({ config: { initialColorMode: 'dark' }, colors });
 
 export const App = () => {
   return (
