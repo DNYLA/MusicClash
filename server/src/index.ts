@@ -7,10 +7,14 @@ import session from 'express-session';
 import cors from 'cors';
 import { getFrontendURL } from './utils';
 import { User as PrismaUser } from '@prisma/client';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import { socketEventHandler } from './socket';
 require('./config/passport-local');
 dotenv.config();
 
 const app: Express = express();
+const httpServer = createServer(app);
 const port = process.env.PORT || 3001;
 
 declare global {
@@ -36,6 +40,9 @@ app.use(
   })
 );
 
+const io = new Server(httpServer);
+socketEventHandler(io);
+
 app.use(express.json()); //Parses All incoming data into JSON
 app.use(express.urlencoded({ extended: false })); //Allows us to retreive data from Form Submissions
 app.use(passport.initialize());
@@ -49,6 +56,6 @@ app.get('/', (req: Request, res: Response) => {
   res.send('<h1>MusicClash</h1>');
 });
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
