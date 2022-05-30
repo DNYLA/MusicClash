@@ -2,11 +2,14 @@ import {
   Box,
   Center,
   chakra,
+  Collapse,
   Divider,
+  Fade,
   Flex,
   Grid,
   GridItem,
   HStack,
+  ScaleFade,
   SimpleGrid,
   Skeleton,
   Text,
@@ -24,67 +27,70 @@ export default function ClashSkeleton({ isLoading }: SkelentonPageProps) {
   const bgCol3 = useColorModeValue('gray.800', 'gray.200');
   const bgUrl = 'https://wallpapercave.com/wp/wp1818813.jpg';
 
-  return isLoading ? (
-    <Box m={5}>
-      <Box
-        p={5}
-        width={'100%'}
-        borderWidth="1px"
-        height={150}
-        bgColor={bgCol2}
-        rounded="lg"
-      >
-        <Center>
-          <Skeleton h={10} w={'70%'} mb={3} />
-        </Center>
-        <HStack justifyContent="center">
-          <Skeleton w={250} h={5} />
-          <Text>vs</Text>
-          <Skeleton w={250} h={5} />
-        </HStack>
-      </Box>
-      <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-          <SkelentoStatsCard
-            title={'Current Players'}
-            icon={<BsPerson size={'3em'} />}
-          />
-          <SkelentoStatsCard
-            title={'Lobbies'}
-            icon={<FiServer size={'3em'} />}
-          />
-          <SkelentoStatsCard
-            title={'Songs'}
-            icon={<MdMusicNote size={'3em'} />}
-          />
-        </SimpleGrid>
-      </Box>
-      <Grid mt={26} templateColumns="repeat(11, 1fr)" gap={4}>
-        <GridItem colSpan={5}>
-          {Array(4)
-            .fill('')
-            .map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-        </GridItem>
-
-        <GridItem colSpan={1}>
-          <Center height={'100%'}>
-            <Divider orientation="vertical" />
+  // return isLoading ? (
+  return (
+    <ScaleFade in={isLoading} dir="right" initialScale={0.5} unmountOnExit>
+      <Box m={5}>
+        <Box
+          p={5}
+          width={'100%'}
+          borderWidth="1px"
+          height={150}
+          bgColor={bgCol2}
+          rounded="lg"
+        >
+          <Center>
+            <Skeleton h={10} w={'70%'} mb={3} />
           </Center>
-        </GridItem>
+          <HStack justifyContent="center">
+            <Skeleton w={250} h={5} />
+            <Text>vs</Text>
+            <Skeleton w={250} h={5} />
+          </HStack>
+        </Box>
 
-        <GridItem colSpan={5}>
-          {Array(4)
-            .fill('')
-            .map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-        </GridItem>
-      </Grid>
-    </Box>
-  ) : (
-    <></>
+        <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+            <SkelentoStatsCard
+              title={'Current Players'}
+              icon={<BsPerson size={'3em'} />}
+            />
+            <SkelentoStatsCard
+              title={'Lobbies'}
+              icon={<FiServer size={'3em'} />}
+            />
+            <SkelentoStatsCard
+              title={'Songs'}
+              icon={<MdMusicNote size={'3em'} />}
+            />
+          </SimpleGrid>
+        </Box>
+
+        <Grid mt={26} templateColumns="repeat(11, 1fr)" gap={4}>
+          <GridItem colSpan={5}>
+            {Array(4)
+              .fill('')
+              .map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+          </GridItem>
+
+          <GridItem colSpan={1}>
+            <Center height={'100%'}>
+              <Divider orientation="vertical" />
+            </Center>
+          </GridItem>
+
+          <GridItem colSpan={5}>
+            {Array(4)
+              .fill('')
+              .map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+          </GridItem>
+        </Grid>
+      </Box>
+    </ScaleFade>
   );
 }
 

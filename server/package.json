@@ -21,7 +21,11 @@
     "express-session": "^1.17.2",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+<<<<<<< HEAD
     "socket.io": "^4.5.1"
+=======
+    "socket.io": "^4.4.1"
+>>>>>>> 3aca7e2842b31fdde38f56964c485e71b7f78744
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

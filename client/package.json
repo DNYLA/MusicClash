@@ -21,7 +21,11 @@
     "react-icons": "^3.11.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+<<<<<<< HEAD
     "socket.io-client": "^4.5.1",
+=======
+    "socket.io-client": "^4.4.1",
+>>>>>>> 3aca7e2842b31fdde38f56964c485e71b7f78744
     "typescript": "^4.6.3",
     "web-vitals": "^0.2.4"
   },
