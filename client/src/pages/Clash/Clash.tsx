@@ -57,7 +57,7 @@ export default function Clash() {
       });
   }, [id]);
 
-  // if (isLoading) return ;
+  if (isLoading) return <ClashSkeleton isLoading={isLoading} />;
   const basicBoxStyles = {
     display: 'flex',
     alignItems: 'center',
@@ -75,13 +75,8 @@ export default function Clash() {
     objectFit: 'scale-down',
     bgSize: 'contain',
   };
-  const handleHost = () => {
-    navigate('host');
-  };
-
   return (
     <Box m={5}>
-      <ClashSkeleton isLoading={isLoading} />
       {/* <Box sx={basicBoxStyles} filter="grayscale(80%)">
         Box with Filter
       </Box>
@@ -149,7 +144,6 @@ export default function Clash() {
             size="lg"
             variant="outline"
             rightIcon={<FaPlay />}
-            onClick={handleHost}
           >
             Play
           </Button>

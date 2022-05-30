@@ -41,7 +41,7 @@ app.use(
 );
 
 const io = new Server(httpServer);
-// socketEventHandler(io);
+socketEventHandler(io);
 
 app.use(express.json()); //Parses All incoming data into JSON
 app.use(express.urlencoded({ extended: false })); //Allows us to retreive data from Form Submissions

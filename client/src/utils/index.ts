@@ -7,11 +7,7 @@ export const getAPIUrl = () => {
   return url;
 };
 
-<<<<<<< HEAD
 export const getSocketUrl = () => {
-=======
-export const getSocketIoURL = () => {
->>>>>>> 3aca7e2842b31fdde38f56964c485e71b7f78744
   const url = process.env.REACT_APP_SOCKET_URL;
   if (!url) throw 'Socket URL not defined';
 

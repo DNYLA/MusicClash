@@ -21,11 +21,7 @@ import {
   Text,
   useColorModeValue,
   WrapItem,
-  Collapse,
-  SlideFade,
 } from '@chakra-ui/react';
-import React from 'react';
-import { createRef, useEffect, useRef } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { getYoutubeThumbnail } from '../utils';
 import { CreateTrack } from '../utils/types';
@@ -138,24 +134,9 @@ const SongCardConainer = ({
   };
 
   const handleDelete = (index: number) => {
-    // const _tracks = [...tracks];
-    // const _track = _tracks[index];
-
-    // setTracks(_tracks);
-    // console.log(_track);
-    // console.log(_track.ref);
-    // _track.ref.target.in = false;
     //Ask for Confirmation before deleting.
     setTracks(tracks.filter((t, i) => i !== index));
   };
-
-  // useEffect(() => {
-  //   const _tracks = [...tracks];
-  //   _tracks.forEach((t) => (t.fade = true));
-  //   setTracks(_tracks);
-  // }, [tracks.length]);
-
-  const itemRef = React.useRef<any>();
 
   return (
     <Box
@@ -205,18 +186,16 @@ const SongCardConainer = ({
         <Divider />
         {tracks.map((track, i) => {
           return (
-            <SlideFade in={true} unmountOnExit ref={itemRef}>
-              <Box key={i}>
-                <SongCard
-                  track={track}
-                  position={i}
-                  handleChange={updatePosition}
-                  deleteCallback={handleDelete}
-                  handleSwitch={handleSwitch}
-                />
-                <Divider />
-              </Box>
-            </SlideFade>
+            <Box key={i}>
+              <SongCard
+                track={track}
+                position={i}
+                handleChange={updatePosition}
+                deleteCallback={handleDelete}
+                handleSwitch={handleSwitch}
+              />
+              <Divider />
+            </Box>
           );
         })}
       </Stack>
