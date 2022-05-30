@@ -1,15 +1,6 @@
-import { error } from 'console';
-
 export const getAPIUrl = () => {
   const url = process.env.REACT_APP_API_URL;
   if (!url) throw 'API URL not defined';
-
-  return url;
-};
-
-export const getSocketUrl = () => {
-  const url = process.env.REACT_APP_SOCKET_URL;
-  if (!url) throw 'Socket URL not defined';
 
   return url;
 };
