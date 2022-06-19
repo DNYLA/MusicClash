@@ -40,6 +40,7 @@ import StatsCard from '../../components/StatsCard';
 import { getClash, getHeardle } from '../../utils/api/Axios';
 import { Heardle } from '../../utils/types';
 import ReactPlayer from 'react-player';
+import { RiContactsBookLine } from 'react-icons/ri';
 
 const MAX_SNIPPET_TIME = 15;
 
@@ -66,8 +67,9 @@ export default function DailyHeardle() {
   });
   const [currentGuess, setCurrentGuess] = useState(0);
   const [guessText, setGuessText] = useState('');
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(-1);
   const [gameEnded, setGameEnded] = useState(false);
+  const [audioLoaded, setAudioLoaded] = useState(true);
   const playerReff = useRef<ReactPlayer>(null);
 
   useEffect(() => {
@@ -92,12 +94,14 @@ export default function DailyHeardle() {
   if (isLoading || !heardle) return <div>Loading...</div>;
 
   const handlePlay = () => {
+    if (progress === -1) setAudioLoaded(false);
     setPlayerSettings({ ...playerSettings, playing: !playerSettings.playing });
   };
 
   const handleProgress = (data: any) => {
     if (!playerReff.current) return;
-
+    if (data.playedSeconds >= 0.2) setAudioLoaded(true);
+    console.log(data);
     const time = Math.round(data.playedSeconds) / MAX_SNIPPET_TIME;
 
     setProgress(time * 100);
@@ -156,6 +160,14 @@ export default function DailyHeardle() {
         </Alert>
       );
     }
+  };
+
+  const getCurrentTime = () => {
+    const time = Math.round(playerReff.current?.getCurrentTime() ?? 0);
+    const timeString = time.toString();
+    if (timeString.length === 1) return '0' + timeString;
+
+    return timeString;
   };
 
   return (
@@ -228,7 +240,7 @@ export default function DailyHeardle() {
             ref={playerReff}
             playing={playerSettings.playing}
             onProgress={handleProgress}
-            volume={0.1}
+            volume={0.5}
           />
         </div>
         <VStack
@@ -257,9 +269,20 @@ export default function DailyHeardle() {
           </Box>
           <Box w="500px" h="500px">
             <Flex justifyContent={'space-between'}>
-              <Box p="4">0:00</Box>
+              <Box p="4">0:{getCurrentTime()}</Box>
               <Box p="4">
-                <Button onClick={handlePlay}>
+                {/* {audioLoaded ? (
+                  <Button onClick={handlePlay}>
+                    {playerSettings.playing ? 'Pause' : 'Play'}
+                  </Button>
+                ) : (
+                )} */}
+                <Button
+                  isLoading={!audioLoaded}
+                  // colorScheme="teal"
+                  variant="solid"
+                  onClick={handlePlay}
+                >
                   {playerSettings.playing ? 'Pause' : 'Play'}
                 </Button>
               </Box>
