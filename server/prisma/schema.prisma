@@ -50,3 +50,13 @@ model Track {
 
   @@id([setId, position], name: "id")
 }
+
+
+model Heardle {
+  id      Int     @id @default(autoincrement())
+  artist String
+  title String
+  url String
+  date DateTime
+  createdAt DateTime   @default(now())
+}

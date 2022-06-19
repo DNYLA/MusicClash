@@ -352,8 +352,8 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: 'Learn Design',
-    href: '#',
+    label: 'Heardle',
+    href: '/heardle/Roddy+Ricch',
   },
   {
     label: 'Hire Designers',

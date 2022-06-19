@@ -27,3 +27,6 @@ export const getClashes = (
   getNew: boolean,
   limit?: number
 ) => AXIOS.get(`/clashes?popular=${getPopular}&new=${getNew}&limit=${limit}`);
+
+export const getHeardle = (artist: string) =>
+  AXIOS.get(`/heardle?artist=${artist}`);

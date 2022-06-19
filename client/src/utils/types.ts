@@ -52,3 +52,11 @@ export type ClashList = {
   popular: Clash[];
   new: Clash[];
 };
+
+export type Heardle = {
+  id: number;
+  artist: string;
+  title?: string; //Hidden until guessed correctly
+  url: string;
+  date: string;
+};
