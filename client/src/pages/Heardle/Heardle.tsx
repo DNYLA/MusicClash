@@ -41,6 +41,8 @@ import { getClash, getHeardle } from '../../utils/api/Axios';
 import { Heardle } from '../../utils/types';
 import ReactPlayer from 'react-player';
 import { RiContactsBookLine } from 'react-icons/ri';
+import SpotifyEmbed from '../../components/SoundcloudWidget/SpotifyEmbed';
+import SoundcloudEmbed from '../../components/SoundcloudWidget/SoundcloudEmbed';
 
 const MAX_SNIPPET_TIME = 15;
 
@@ -288,6 +290,8 @@ export default function DailyHeardle() {
               </Box>
               <Box p="4">0:{MAX_SNIPPET_TIME}</Box>
             </Flex>
+            <SpotifyEmbed trackId="3QzAOrNlsabgbMwlZt7TAY" />
+            <SoundcloudEmbed />
             <Box>
               {/* <VStack>
                 <Progress colorScheme="green" size="sm" value={getProgress()} />
